@@ -23,7 +23,7 @@ const renderText = (text,className,baseWeight = 400) => {
 };
 
 const setupTextHover = (container, type)=> {
-    if(!container) return;
+    if(!container) return () => {}; // Return no-op cleanup
 
     const letters = container.querySelectorAll('span');
     const {min, max, default: base} = FONT_WEIGHTS[type];
@@ -93,7 +93,7 @@ export const Welcome = () => {
             </h1>
 
             <div className="small-screen">
-                <p>Este portafolio esta disenado solo para pantallas desktop/tablets </p>
+                <p>Este portafolio está diseñado solo para pantallas desktop/tablets </p>
             </div>
 
 
