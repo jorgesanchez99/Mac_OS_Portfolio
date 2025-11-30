@@ -38,25 +38,25 @@ const navIcons = [
 const dockApps = [
   {
     id: "finder",
-    name: "Portfolio", // was "Finder"
+    name: "Portafolio", // was "Finder"
     icon: "finder.png",
     canOpen: true,
   },
   {
     id: "safari",
-    name: "Articles", // was "Safari"
+    name: "Articulos", // was "Safari"
     icon: "safari.png",
     canOpen: true,
   },
   {
     id: "photos",
-    name: "Gallery", // was "Photos"
+    name: "Galleria", // was "Photos"
     icon: "photos.png",
     canOpen: true,
   },
   {
     id: "contact",
-    name: "Contact", // or "Get in touch"
+    name: "Contacto", // or "Get in touch"
     icon: "contact.png",
     canOpen: true,
   },
@@ -68,7 +68,7 @@ const dockApps = [
   },
   {
     id: "trash",
-    name: "Archive", // was "Trash"
+    name: "Archivo", // was "Trash"
     icon: "trash.png",
     canOpen: false,
   },

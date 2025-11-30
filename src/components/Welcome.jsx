@@ -82,7 +82,7 @@ export const Welcome = () => {
     return (
         <section id="welcome">
             <p ref={subtitleRef}>
-                {renderText("Hey, Soy Jorge! Bienvenido a mi",
+                {renderText("Hola, Soy Jorge! Bienvenido a mi",
                 "text-3xl font-georama",
                 100
                 )}
