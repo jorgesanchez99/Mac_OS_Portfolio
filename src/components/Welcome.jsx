@@ -64,7 +64,7 @@ const setupTextHover = (container, type)=> {
 
 };
 
-export const Welcome = () => {
+const Welcome = () => {
     const titleRef =  useRef(null);
     const subtitleRef =  useRef(null);
 
@@ -100,5 +100,7 @@ export const Welcome = () => {
         </section>
     );
 };
+
+export default Welcome;
 
 
