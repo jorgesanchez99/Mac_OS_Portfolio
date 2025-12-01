@@ -1,4 +1,3 @@
-import React from 'react'
 import {techStack} from "#constants/index.js";
 import {Check, Flag} from "lucide-react";
 
@@ -44,7 +43,7 @@ const Terminal = () => {
                 <div className="footnote">
                     <p>
                         <Check className="check" size={20}/>
-                        5 de 5 tecnologias cargadas exitosamente (100%)
+                        {techStack.length} de {techStack.length} tecnologias cargadas exitosamente (100%)
                     </p>
 
                     <p className="text-black">

@@ -36,7 +36,7 @@ const WindowWrapper = (Component, windowKey) => {
             const element = ref.current;
             if (!element) return;
             element.style.display = isOpen ? "block" : "none";
-        })
+        }, [isOpen]);
 
 
         return (
