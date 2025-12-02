@@ -17,7 +17,7 @@ function Finder() {
                 {items.map(item => (
                     <li key={item.id} onClick={() => setActiveLocation(item)}
                         className={clsx(
-                            item.id === activeLocation.id ? "active" : "not-active",
+                            item.id === activeLocation?.id ? "active" : "not-active",
                         )}
                     >
                         <img src={item.icon} className="w-4" alt={item.name}/>
@@ -33,6 +33,8 @@ function Finder() {
         if (item.kind === "folder") return setActiveLocation(item);
         if (["fig", "url"].includes(item.fileType) && item.href)
             return window.open(item.href, "_blank");
+
+        openWindow(`${item.fileType}${item.kind}`, item);
     };
 
     return (
