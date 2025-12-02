@@ -10,21 +10,13 @@ function Image() {
     const [isLoading, setIsLoading] = useState(true);
     const [hasError, setHasError] = useState(false);
 
-    // Keyboard shortcuts
+    // Keyboard shortcut: ESC para cerrar ventana
     useEffect(() => {
         const handleKeyDown = (e) => {
-            // Solo funcionar si hay data y la ventana está abierta
             if (!data || !windows.imgfile.isOpen) return;
 
-            // ESC - Cerrar ventana
             if (e.key === 'Escape') {
                 closeWindow('imgfile');
-            }
-
-            // Space - Toggle fullscreen (preparado para futuro)
-            if (e.key === ' ' && e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
-                e.preventDefault();
-                // Placeholder para futuro modal fullscreen
             }
         };
 
@@ -103,10 +95,6 @@ function Image() {
                                 <span className="flex items-center gap-1">
                                     <kbd className="px-1.5 py-0.5 bg-white/20 rounded text-white">ESC</kbd>
                                     {' '}Close
-                                </span>
-                                <span className="flex items-center gap-1">
-                                    <kbd className="px-1.5 py-0.5 bg-white/20 rounded text-white">Space</kbd>
-                                    {' '}Fullscreen
                                 </span>
                             </div>
                         </div>
