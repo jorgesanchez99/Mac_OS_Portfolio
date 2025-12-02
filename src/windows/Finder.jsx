@@ -53,7 +53,7 @@ function Finder() {
                 </div>
 
                 <ul className="content">
-                    {activeLocation?.children.map((item) => (
+                    {activeLocation?.children?.map((item) => (
                         <li
                             key={item.id}
                             className={`${item.position} cursor-pointer`}

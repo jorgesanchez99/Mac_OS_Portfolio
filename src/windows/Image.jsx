@@ -10,6 +10,15 @@ function Image() {
     const [isLoading, setIsLoading] = useState(true);
     const [hasError, setHasError] = useState(false);
 
+    // Reset states when image changes
+    useEffect(() => {
+        if (!data?.imageUrl) return;
+
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        setIsLoading(true);
+        setHasError(false);
+    }, [data?.imageUrl]);
+
     // Keyboard shortcut: ESC para cerrar ventana
     useEffect(() => {
         const handleKeyDown = (e) => {
@@ -74,7 +83,7 @@ function Image() {
 
                 {/* Imagen */}
                 {!hasError && (
-                    <div className={`relative max-w-full max-h-full group ${isLoading ? 'hidden' : ''}`}>
+                    <div key={imageUrl} className={`relative max-w-full max-h-full group ${isLoading ? 'hidden' : ''}`}>
                         <img
                             src={imageUrl}
                             alt={name}
