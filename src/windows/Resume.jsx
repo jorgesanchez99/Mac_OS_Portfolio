@@ -20,6 +20,7 @@ const Resume = () => {
             <a
             href="files/CV_Jorge_Sanchez.pdf"
             target="_blank"
+            rel="noopener noreferrer"
             className="cursor-pointer"
             title="Descargar CV"
             >
