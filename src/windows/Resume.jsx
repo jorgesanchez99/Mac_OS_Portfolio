@@ -15,7 +15,7 @@ const Resume = () => {
 
         <div id="window-header">
             <WindowControls target="resume"/>
-            <h2>CV.pdf</h2>
+            <h2>CV_Jorge_Sanchez.pdf</h2>
 
             <a
             href="files/CV_Jorge_Sanchez.pdf"
