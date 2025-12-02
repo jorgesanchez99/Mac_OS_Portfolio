@@ -1,10 +1,12 @@
 import dayjs from "dayjs";
 import {useState, useEffect} from "react";
 import {navIcons, navLinks} from "#constants";
+import useWindowStore from "#store/window.js";
 
 
 const NavBar = () => {
     const [currentTime, setCurrentTime] = useState(dayjs());
+    const {openWindow} = useWindowStore();
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -20,8 +22,8 @@ const NavBar = () => {
                 <p className="font-bold">Jorge's Portfolio</p>
 
                 <ul>
-                    {navLinks.map(({id, name}) => (
-                        <li key={id}>
+                    {navLinks.map(({id, name,type}) => (
+                        <li key={id} onClick={()=> openWindow(type)}>
                             <p> {name}</p>
                         </li>
                     ))}
