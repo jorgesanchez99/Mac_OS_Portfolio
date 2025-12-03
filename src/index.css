@@ -125,9 +125,9 @@ body {
         }
     }
 
-
     #window-controls {
-        @apply flex gap-2;
+        @apply gap-2 items-center;
+        /* El flex lo ponemos en el JSX con className */
 
         .close {
             @apply size-3.5 rounded-full bg-[#ff6157] cursor-pointer;
@@ -143,8 +143,16 @@ body {
     }
 
     #window-header {
-        @apply flex items-center justify-between px-4 py-3 rounded-t-lg bg-gray-50 border-b border-gray-200 select-none text-sm text-gray-400;
+        @apply flex items-center justify-between
+        rounded-t-lg border-b border-gray-200 bg-gray-50
+        select-none text-xs text-gray-400
+        px-3 py-2.5 sm:px-4 sm:py-3 sm:text-sm;
+
+        h2 {
+            @apply flex-1 text-center font-semibold text-gray-500 text-xs sm:text-sm;
+        }
     }
+
 
     #safari {
         @apply w-4xl absolute top-40 left-2/12 bg-white shadow-2xl drop-shadow-2xl rounded-xl overflow-hidden;
@@ -190,51 +198,73 @@ body {
         }
     }
 
+    /* === TERMINAL WINDOW === */
     #terminal {
-        @apply w-xl absolute top-32 left-1/12 bg-white shadow-2xl drop-shadow-2xl rounded-xl overflow-hidden;
+        /* Mobile: panel casi a pantalla completa debajo del navbar */
+        @apply fixed inset-x-0 bottom-0 top-14 mx-auto w-full
+        bg-white shadow-2xl drop-shadow-2xl
+        rounded-t-2xl overflow-y-auto;
+
+        /* Desktop: vuelve a ser ventana flotante como antes */
+        @apply md:absolute md:top-32 md:left-1/12
+        md:bottom-auto md:inset-x-auto md:mx-0
+        md:w-xl md:rounded-xl md:overflow-hidden;
 
         h2 {
-            @apply font-bold text-sm text-center w-full;
+            @apply font-bold text-xs sm:text-sm text-center w-full;
         }
 
-        .techstack {
-            @apply text-sm font-roboto p-5;
+    #terminal {
+  /* ... lo que ya tienes arriba ... */
 
-            .label {
-                @apply flex items-center ms-10 mt-7;
-            }
+  .techstack {
+    @apply font-roboto text-xs sm:text-sm p-4 sm:p-5 text-left;
 
-            .content {
-                @apply py-5 my-5 border-y border-dashed space-y-1;
-
-                li {
-                    .check {
-                        @apply text-[#00A154] w-5;
-                    }
-
-                    h3 {
-                        @apply font-semibold text-[#00A154] w-32 ms-5;
-                    }
-
-                    ul {
-                        @apply flex items-center gap-3;
-                    }
-                }
-            }
-
-            .footnote {
-                @apply text-[#00A154] space-y-1;
-
-                p {
-                    @apply flex items-center;
-
-                    svg {
-                        @apply w-5 me-5;
-                    }
-                }
-            }
-        }
+    /* Línea del prompt */
+    > p:first-child {
+      @apply mb-3 font-mono;
     }
+
+    .label {
+      @apply mt-2 ms-0 flex flex-col gap-0.5 text-[11px] text-gray-500;
+      @apply sm:mt-4 sm:ms-10 sm:flex-row sm:items-center;
+    }
+
+    .content {
+      @apply py-3 my-3 border-y border-dashed space-y-2 sm:py-5 sm:my-5;
+    }
+
+    .content li {
+      @apply flex flex-col items-start gap-1 sm:flex-row sm:items-center;
+
+      .check {
+        @apply text-[#00A154] w-5 mt-0.5;
+      }
+
+      h3 {
+        @apply font-semibold text-[#00A154] ms-0 mb-0.5 sm:mb-0 sm:w-32 sm:ms-5;
+      }
+
+      ul {
+        @apply flex flex-wrap gap-x-2 gap-y-1 sm:gap-3;
+      }
+    }
+
+    .footnote {
+      @apply mt-3 text-[#00A154] space-y-1;
+
+      p {
+        @apply flex items-center;
+
+        svg {
+          @apply w-5 me-3;
+        }
+      }
+    }
+  }
+}
+
+
 
     #contact {
         @apply max-w-2xl absolute top-60 left-5/12 bg-white shadow-2xl drop-shadow-2xl rounded-xl overflow-hidden;
