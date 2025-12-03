@@ -1,53 +1,77 @@
-import {useLayoutEffect, useRef} from "react";
+import { useLayoutEffect, useRef } from "react";
 import useWindowStore from "#store/window.js";
-import {useGSAP} from "@gsap/react";
+import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import {Draggable} from "gsap/Draggable";
+import { Draggable } from "gsap/Draggable";
 
 const WindowWrapper = (Component, windowKey) => {
-    const Wrapped = (props) => {
-        const {focusWindow, windows} = useWindowStore();
-        const {isOpen, zIndex} = windows[windowKey];
-        const ref = useRef(null);
+  const Wrapped = (props) => {
+    const { focusWindow, windows } = useWindowStore();
+    const { isOpen, zIndex } = windows[windowKey];
+    const ref = useRef(null);
 
-        useGSAP(() => {
-            const element = ref.current;
-            if (!element || !isOpen) return;
+    // Animación de entrada
+    useGSAP(() => {
+      const element = ref.current;
+      if (!element || !isOpen) return;
 
-            element.style.display = "block";
+      element.style.display = "block";
 
-            gsap.fromTo(
-                element,
-                {scale: 0.8, opacity: 0, y: 40},
-                {scale: 1, opacity: 1, y: 0, duration: 0.6, ease: "power3.out"}
-            );
+      gsap.fromTo(
+        element,
+        { scale: 0.8, opacity: 0, y: 40 },
+        { scale: 1, opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }
+      );
+    }, [isOpen]);
 
-        }, [isOpen]);
+    // Draggable solo en >= 768px y solo arrastrando desde el header
+    useGSAP(() => {
+      const element = ref.current;
+      if (!element) return;
 
-        useGSAP(() => {
-            const element = ref.current;
-            if (!element) return;
-            const [instance] = Draggable.create(element, {onPress: () => focusWindow(windowKey)});
-            return () => instance.kill();
-            // Está limpieza asegura que la instancia se destruya al desmontar el componente
-        }, []);
+      const mm = gsap.matchMedia();
 
-        useLayoutEffect(() => {
-            const element = ref.current;
-            if (!element) return;
-            element.style.display = isOpen ? "block" : "none";
-        }, [isOpen]);
+      mm.add("(min-width: 768px)", () => {
+        const header = element.querySelector("#window-header");
 
+        const [instance] = Draggable.create(element, {
+          //trigger: header || element, // si no hay header, usa toda la ventana
+          onPress: () => focusWindow(windowKey),
+        });
 
-        return (
-            <section id={windowKey} ref={ref} style={{zIndex}}
-                     className="absolute">
-                <Component {...props}/>
-            </section>
-        );
-    };
+        // cleanup para ESTE media query
+        return () => {
+          if (instance) instance.kill();
+        };
+      });
 
-    Wrapped.displayName = `WindowWrapper(${Component.displayName || Component.name || "Component"})`;
-    return Wrapped;
+      // cleanup general cuando se desmonta el componente
+      return () => mm.revert();
+    }, [focusWindow]);
+
+    // Mostrar / ocultar según isOpen
+    useLayoutEffect(() => {
+      const element = ref.current;
+      if (!element) return;
+      element.style.display = isOpen ? "block" : "none";
+    }, [isOpen]);
+
+    return (
+      <section
+        id={windowKey}
+        ref={ref}
+        style={{ zIndex }}
+        className="absolute"
+      >
+        <Component {...props} />
+      </section>
+    );
+  };
+
+  Wrapped.displayName = `WindowWrapper(${
+    Component.displayName || Component.name || "Component"
+  })`;
+  return Wrapped;
 };
-export default WindowWrapper
+
+export default WindowWrapper;
