@@ -4,6 +4,7 @@ import {useGSAP} from "@gsap/react";
 import {Draggable} from "gsap/Draggable";
 import useWindowStore from "#store/window.js";
 import useLocationStore from "#store/location.js";
+import {useRef} from "react";
 
 
 const projects = locations.work?.children ?? []
@@ -12,6 +13,7 @@ const Home = () => {
 
     const {setActiveLocation} = useLocationStore()
     const {openWindow} = useWindowStore()
+    const listRef = useRef(null);
 
 
     const handleOpenProject = (project) => {
@@ -19,15 +21,18 @@ const Home = () => {
         openWindow("finder")
     }
 
-    useGSAP(()=>{
-        Draggable.create(".folder");
-    },[])
+    useGSAP(() => {
+        if (!listRef.current) return;
+        const folders = listRef.current.querySelectorAll(".folder");
+        const instances = Draggable.create(folders);
+        return () => instances.forEach(instance => instance.kill());
+    }, [])
 
 
     return (
         <section id="home">
 
-            <ul>
+            <ul ref={listRef}>
                 {projects.map((project) => (
                     <li
                         key={project.id}
