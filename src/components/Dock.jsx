@@ -3,17 +3,17 @@ import {Tooltip} from "react-tooltip";
 import {useGSAP} from "@gsap/react";
 import {gsap} from "gsap";
 
-
 import {dockApps} from "#constants";
 import useWindowStore from "#store/window.js";
 
+const PINNED_MOBILE_APPS = 5; // cuántos iconos se muestran en mobile
 
 const Dock = () => {
 
-    const {openWindow, closeWindow, windows} = useWindowStore()
+    const {openWindow, closeWindow, windows} = useWindowStore();
     const dockRef = useRef(null);
 
-    useGSAP(()=>{
+    useGSAP(()=> {
         const dock = dockRef.current;
         if(!dock) return;
 
@@ -61,60 +61,75 @@ const Dock = () => {
             dock.removeEventListener("mousemove", handleMouseMove);
             dock.removeEventListener("mouseleave", resetIcons);
         };
-
-
     },[]);
 
     const toggleApp = (app) => {
         if(!app.canOpen) return;
 
-        const window = windows[app.id];
-        if(!window){
+        const appWindow = windows[app.id];
+        if(!appWindow){
             console.log(`No window found for app: ${app.id}`);
             return;
         }
 
-        if(window.isOpen){
+        if(appWindow.isOpen){
             closeWindow(app.id);
         } else {
             openWindow(app.id);
         }
-
-
-
-    }
-
+    };
 
     return (
         <section id="dock">
             <div ref={dockRef} className="dock-container">
-                {dockApps.map(({id, name, icon, canOpen}) => (
-                    <div key={id} className="relative flex justify-center">
-                        <button
-                            type="button"
-                            className="dock-icon"
-                            aria-label={name}
-                            data-tooltip-id="dock-tooltip"
-                            data-tooltip-content={name}
-                            data-tooltip-delay-show={150}
-                            disabled={!canOpen}
-                            onClick={() => toggleApp({id, canOpen})}
-                        >
-                            <img
-                                src={`/images/${icon}`}
-                                alt={name}
-                                loading="lazy"
-                                className={canOpen ? "" : "opacity-60"}
-                            />
+                {dockApps.map(({id, name, icon, canOpen}, index) => {
+                    const appWindow = windows[id];
+                    const isOpen = appWindow?.isOpen;
+                    const hideOnMobile = index >= PINNED_MOBILE_APPS;
 
-                        </button>
-                    </div>
-                ))}
+                    return (
+                        <div
+                            key={id}
+                            className={`relative flex justify-center ${
+                                hideOnMobile ? "hidden sm:flex" : ""
+                            }`}
+                        >
+                            <button
+                                type="button"
+                                className={`dock-icon ${!canOpen ? "cursor-not-allowed" : ""}`}
+                                aria-label={name}
+                                aria-pressed={isOpen ? "true" : "false"}
+                                data-tooltip-id="dock-tooltip"
+                                data-tooltip-content={name}
+                                data-tooltip-delay-show={150}
+                                disabled={!canOpen}
+                                onClick={() => toggleApp({id, canOpen})}
+                            >
+                                <img
+                                    src={`/images/${icon}`}
+                                    alt={name}
+                                    loading="lazy"
+                                    className={canOpen ? "" : "opacity-60"}
+                                />
+                            </button>
+
+                            {/* Puntito de app abierta */}
+                            {isOpen && (
+                                <span
+                                    className="
+                                      pointer-events-none absolute -bottom-1
+                                      h-1.5 w-1.5 rounded-full
+                                      bg-white shadow-[0_0_6px_rgba(255,255,255,0.85)]
+                                    "
+                                />
+                            )}
+                        </div>
+                    );
+                })}
                 <Tooltip id="dock-tooltip" place="top" className="tooltip" />
             </div>
-
         </section>
-    )
-}
-export default Dock
+    );
+};
 
+export default Dock;
