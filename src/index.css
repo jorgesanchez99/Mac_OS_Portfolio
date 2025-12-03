@@ -11,12 +11,33 @@ body {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
+  transition: background-color 0.3s ease;
+}
+
+/* Soporte para dark mode */
+.dark body {
+  background-image: url("/images/wallpaper.png");
 }
 
 @theme {
   --font-georama: "Georama", sans-serif;
   --font-roboto: "Roboto Mono", monospace;
   --breakpoint-3xl: 1920px;
+
+  /* Variables de tema personalizadas */
+  --color-bg-primary: #ffffff;
+  --color-bg-secondary: #f3f4f6;
+  --color-text-primary: #111827;
+  --color-text-secondary: #6b7280;
+  --color-border: #e5e7eb;
+}
+
+@theme dark {
+  --color-bg-primary: #1f2937;
+  --color-bg-secondary: #111827;
+  --color-text-primary: #f9fafb;
+  --color-text-secondary: #9ca3af;
+  --color-border: #374151;
 }
 
 @utility flex-center {
