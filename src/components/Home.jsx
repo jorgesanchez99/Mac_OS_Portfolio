@@ -25,13 +25,7 @@ const Home = () => {
         if (!listRef.current) return;
         const folders = listRef.current.querySelectorAll(".folder");
         const instances = Draggable.create(folders);
-        return () => {
-            if (Array.isArray(instances)) {
-                instances.forEach(instance => instance.kill());
-            } else if (instances) {
-                instances.kill();
-            }
-        };
+        return () => instances.forEach(instance => instance.kill());
     }, [])
 
 
