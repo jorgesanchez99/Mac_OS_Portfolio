@@ -33,6 +33,14 @@ const Home = () => {
                         key={project.id}
                         className={clsx("group folder",project.windowPosition)}
                         onClick={() => handleOpenProject(project)}
+                        role="button"
+                        tabIndex={0}
+                        onKeyDown={(e) => {
+                            if (e.key === 'Enter' || e.key === ' ') {
+                                e.preventDefault();
+                                handleOpenProject(project);
+                            }
+                        }}
                     >
                         <img src="/images/folder.png" alt="" />
                         <p>{project.name}</p>
