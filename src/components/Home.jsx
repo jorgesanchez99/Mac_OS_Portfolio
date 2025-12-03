@@ -1,3 +1,4 @@
+import {useRef} from "react";
 import {locations} from "#constants/index.js";
 import clsx from "clsx";
 import {useGSAP} from "@gsap/react";
@@ -12,6 +13,7 @@ const Home = () => {
 
     const {setActiveLocation} = useLocationStore()
     const {openWindow} = useWindowStore()
+    const listRef = useRef(null);
 
 
     const handleOpenProject = (project) => {
@@ -19,15 +21,18 @@ const Home = () => {
         openWindow("finder")
     }
 
-    useGSAP(()=>{
-        Draggable.create(".folder");
-    },[])
+    useGSAP(() => {
+        if (!listRef.current) return;
+        const folders = listRef.current.querySelectorAll(".folder");
+        const instances = Draggable.create(folders);
+        return () => instances.forEach(instance => instance.kill());
+    }, [])
 
 
     return (
         <section id="home">
 
-            <ul>
+            <ul ref={listRef}>
                 {projects.map((project) => (
                     <li
                         key={project.id}
