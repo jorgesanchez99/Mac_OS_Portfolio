@@ -1,10 +1,10 @@
+import {useRef} from "react";
 import {locations} from "#constants/index.js";
 import clsx from "clsx";
 import {useGSAP} from "@gsap/react";
 import {Draggable} from "gsap/Draggable";
 import useWindowStore from "#store/window.js";
 import useLocationStore from "#store/location.js";
-import {useRef} from "react";
 
 
 const projects = locations.work?.children ?? []
