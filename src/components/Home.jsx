@@ -1,3 +1,5 @@
+import {useRef} from "react";
+import {gsap} from "gsap";
 import {locations} from "#constants/index.js";
 import clsx from "clsx";
 import {useGSAP} from "@gsap/react";
@@ -12,6 +14,7 @@ const Home = () => {
 
     const {setActiveLocation} = useLocationStore()
     const {openWindow} = useWindowStore()
+    const homeRef = useRef(null)
 
 
     const handleOpenProject = (project) => {
@@ -19,13 +22,16 @@ const Home = () => {
         openWindow("finder")
     }
 
-    useGSAP(()=>{
-        Draggable.create(".folder");
-    },[])
+    useGSAP(() => {
+        gsap.registerPlugin(Draggable)
+        const items = homeRef.current?.querySelectorAll(".folder") ?? []
+        const draggables = Draggable.create(items)
+        return () => draggables.forEach((d) => d.kill())
+    }, {dependencies: [], scope: homeRef})
 
 
     return (
-        <section id="home">
+        <section id="home" ref={homeRef}>
 
             <ul>
                 {projects.map((project) => (
@@ -33,16 +39,8 @@ const Home = () => {
                         key={project.id}
                         className={clsx("group folder",project.windowPosition)}
                         onClick={() => handleOpenProject(project)}
-                        role="button"
-                        tabIndex={0}
-                        onKeyDown={(e) => {
-                            if (e.key === 'Enter' || e.key === ' ') {
-                                e.preventDefault();
-                                handleOpenProject(project);
-                            }
-                        }}
                     >
-                        <img src="/images/folder.png" alt="" />
+                        <img src="/images/folder.png" alt={`${project.name} folder icon`} />
                         <p>{project.name}</p>
                     </li>
                 ))}
