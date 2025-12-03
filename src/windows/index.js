@@ -5,6 +5,7 @@ import Finder from "#windows/Finder.jsx";
 import Text from "#windows/Text.jsx";
 import Image from "#windows/Image.jsx";
 import Contact from "#windows/Contact.jsx";
+import Gallery from "#windows/Gallery.jsx";
 
 export{
     Terminal,
@@ -13,5 +14,6 @@ export{
     Finder,
     Text,
     Image,
-    Contact
+    Contact,
+    Gallery
 };
