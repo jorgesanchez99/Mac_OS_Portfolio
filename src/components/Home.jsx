@@ -22,12 +22,30 @@ const Home = () => {
         openWindow("finder")
     }
 
-    useGSAP(() => {
-        gsap.registerPlugin(Draggable)
-        const items = homeRef.current?.querySelectorAll(".folder") ?? []
-        const draggables = Draggable.create(items)
-        return () => draggables.forEach((d) => d.kill())
-    }, {dependencies: [], scope: homeRef})
+ useGSAP(() => {
+    gsap.registerPlugin(Draggable);
+
+    const items = homeRef.current?.querySelectorAll(".folder") ?? [];
+    if (!items.length) return;
+
+    const mm = gsap.matchMedia();
+
+    // Solo activar Draggable en dispositivos con puntero fino (mouse/trackpad)
+    mm.add("(pointer: fine)", () => {
+        const draggables = Draggable.create(items, {
+            dragClickables: true,   // muy importante para que el click siga funcionando
+        });
+
+        // cleanup cuando deja de aplicar la media query
+        return () => {
+            draggables.forEach(d => d.kill());
+        };
+    });
+
+    // cleanup general al desmontar
+    return () => mm.revert();
+}, { scope: homeRef });
+
 
 
     return (

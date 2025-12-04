@@ -524,4 +524,21 @@ body {
         @apply lg:w-[70vw] lg:h-[80vh] lg:top-20 lg:left-1/2 lg:-translate-x-1/2;
     }
 
+
+    #txtfile {
+        @apply absolute rounded-xl shadow-2xl drop-shadow-2xl
+        bg-transparent transform;
+
+        /* Mobile / tablet: modal casi fullscreen
+           (tapa fondo y dock, respeta navbar superior) */
+        @apply left-1/2 -translate-x-1/2 top-20
+        w-[94vw] sm:w-[90vw]
+        h-[calc(100vh-5rem)];
+
+        /* Desktop: centrado, ancho cómodo para leer texto */
+        @apply lg:w-[60vw] lg:h-[75vh]
+        lg:top-20 lg:left-1/2 lg:-translate-x-1/2;
+    }
+
+
 }
