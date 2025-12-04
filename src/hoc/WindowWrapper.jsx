@@ -47,7 +47,7 @@ const WindowWrapper = (Component, windowKey) => {
 
       // cleanup general al desmontar el componente
       return () => mm.revert();
-    }, [focusWindow]);
+    }, [focusWindow, windowKey]);
 
     // Mostrar/ocultar ventana según isOpen
     useLayoutEffect(() => {

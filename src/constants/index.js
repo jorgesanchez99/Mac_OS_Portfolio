@@ -127,65 +127,65 @@ const javaShowcase = [
 ];
 
 
-
-
 const techStack = [
     {
-        category: "Frontend",
-        items: ["React.js", "Next.js", "TypeScript"],
+        category: "Backend (Principal)",
+        items: ["Java", "Java OOP", "Spring Boot (Aprendiendo)", "JDBC", "SQL"],
     },
     {
-        category: "Mobile",
-        items: ["React Native", "Expo"],
+        category: "Frontend",
+        items: ["HTML", "CSS", "JavaScript (Aprendiendo)", "React (Básico)", "Vite"],
     },
     {
         category: "Styling",
-        items: ["Tailwind CSS", "Sass", "CSS"],
+        items: ["Tailwind CSS"],
     },
     {
-        category: "Backend",
-        items: ["Node.js", "Express", "NestJS", "Hono"],
+        category: "Databases",
+        items: ["MySQL", "PostgreSQL"],
     },
     {
-        category: "Database",
-        items: ["MongoDB", "PostgreSQL"],
+        category: "Tools",
+        items: ["Git", "GitHub", "IntelliJ IDEA", "WebStorm", "Figma"],
     },
     {
-        category: "Dev Tools",
-        items: ["Git", "GitHub", "Docker"],
+        category: "Learning Path",
+        items: ["TypeScript", "Spring Boot", "REST APIs", "React avanzado"],
     },
 ];
+
 
 const socials = [
     {
         id: 1,
-        text: "Github",
+        text: "GitHub",
         icon: "/icons/github.svg",
-        bg: "#f4656b",
-        link: "https://github.com/JavaScript-Mastery-Pro",
+        bg: "#24292e", // negro GitHub
+        link: "https://github.com/jorgesanchez99",
     },
     {
         id: 2,
-        text: "Platform",
-        icon: "/icons/atom.svg",
-        bg: "#4bcb63",
-        link: "https://jsmastery.com/",
+        text: "LinkedIn",
+        icon: "/icons/linkedin.svg",
+        bg: "#0A66C2", // azul oficial LinkedIn
+        link: "https://www.linkedin.com/in/jorge-anthony-sanchez-chavez/",
     },
     {
         id: 3,
         text: "Twitter/X",
         icon: "/icons/twitter.svg",
-        bg: "#ff866b",
-        link: "https://x.com/jsmasterypro",
+        bg: "#000000", // X usa el negro ahora
+        link: "https://x.com/Jascmen1",
     },
     {
         id: 4,
-        text: "LinkedIn",
-        icon: "/icons/linkedin.svg",
-        bg: "#05b6f6",
-        link: "https://www.linkedin.com/company/javascriptmastery/posts/?feedView=all",
+        text: "Instagram",
+        icon: "/icons/instagram.svg",
+        bg: "#E4405F", // color oficial IG
+        link: "https://www.instagram.com/jascmen/",
     },
 ];
+
 
 const photosLinks = [
     {
@@ -220,25 +220,25 @@ const gallery = [
         id: 1,
         fileType: "img",
         kind: "file",
-        imageUrl: "/images/gal1.png",
+        imageUrl: "/images/gallery/keiko-right.jpg",
     },
     {
         id: 2,
         fileType: "img",
         kind: "file",
-        imageUrl: "/images/gal2.png",
+        imageUrl: "/images/gallery/keiko-bed2.jpg",
     },
     {
         id: 3,
         fileType: "img",
         kind: "file",
-        imageUrl: "/images/gal3.png",
+        imageUrl: "/images/gallery/keiko-perfil.jpg",
     },
     {
         id: 4,
         fileType: "img",
         kind: "file",
-        imageUrl: "/images/gal4.png",
+        imageUrl: "/images/gallery/keiko-bed3.jpg",
     },
 
 ];
@@ -425,36 +425,36 @@ const WORK_LOCATION = {
 const ABOUT_LOCATION = {
     id: 2,
     type: "about",
-    name: "About me",
+    name: "About",
     icon: "/icons/info.svg",
     kind: "folder",
     children: [
         {
             id: 1,
-            name: "me.png",
+            name: "pet.png",
             icon: "/images/image.png",
             kind: "file",
             fileType: "img",
             position: "top-10 left-5",
-            imageUrl: "/images/adrian.jpg",
+            imageUrl: "/images/jorge.jpg",
         },
         {
             id: 2,
-            name: "casual-me.png",
+            name: "pet-family.png",
             icon: "/images/image.png",
             kind: "file",
             fileType: "img",
             position: "top-28 right-72",
-            imageUrl: "/images/adrian-2.jpg",
+            imageUrl: "/images/pet-family.jpg",
         },
         {
             id: 3,
-            name: "conference-me.png",
+            name: "keiko-bed.png",
             icon: "/images/image.png",
             kind: "file",
             fileType: "img",
             position: "top-52 left-80",
-            imageUrl: "/images/adrian-3.jpeg",
+            imageUrl: "/images/keiko-bed.jpg",
         },
         {
             id: 4,
@@ -463,15 +463,16 @@ const ABOUT_LOCATION = {
             kind: "file",
             fileType: "txt",
             position: "top-60 left-5",
-            subtitle: "Meet the Developer Behind the Code",
-            image: "/images/adrian.jpg",
+            subtitle: "Conoce al desarrollador detrás del código",
+            image: "/images/jorge.jpg",
             description: [
-                "Hey! I’m Adrian 👋, a web developer who enjoys building sleek, interactive websites that actually work well.",
-                "I specialize in JavaScript, React, and Next.js—and I love making things feel smooth, fast, and just a little bit delightful.",
-                "I’m big on clean UI, good UX, and writing code that doesn’t need a search party to debug.",
-                "Outside of dev work, you'll find me tweaking layouts at 2AM, sipping overpriced coffee, or impulse-buying gadgets I absolutely convinced myself I needed 😅",
+                "Hola, soy Jorge 👋, desarrollador backend en formación con enfoque en Java y muchas ganas de crecer en el ecosistema web.",
+                "Actualmente refuerzo fundamentos de Java (POO, colecciones, genéricos, streams, concurrencia) mientras construyo bases sólidas en HTML, CSS, JavaScript y React.",
+                "Me gusta escribir código limpio y entendible, cuidar la arquitectura incluso en proyectos pequeños y aplicar buenas prácticas siempre que puedo.",
+                "Fuera del código suelo ver series de crimen y policiacas, jugar videojuegos online, ver anime y videos de tecnología y programación… siempre con algo nuevo que aprender 😅",
             ],
-        },
+        }
+
     ],
 };
 

@@ -16,7 +16,7 @@ const Terminal = () => {
         {/* Prompt estilo terminal */}
         <p className="mb-3 font-mono text-xs sm:text-sm">
           <span className="font-bold">@jorgesanchez99 %</span>{" "}
-          Mi stack tecnologico incluye:
+          Mi stack tecnológico incluye:
         </p>
 
         {/* Lista de categorías + tecnologías */}
@@ -34,7 +34,7 @@ const Terminal = () => {
                 {items.map((item, i) => (
                   <li key={i}>
                       {item}
-                      {i<items.length -1 ? ',' : ''}
+                      {i<items.length - 1 ? ',' : ''}
                   </li>
                 ))}
               </ul>
@@ -46,7 +46,7 @@ const Terminal = () => {
         <div className="footnote mt-2">
           <p>
             <ChevronRight className="check" size={20} />
-            {techStack.length} de {techStack.length} tecnologias cargadas
+            {techStack.length} de {techStack.length} tecnologías cargadas
             exitosamente (100%)
           </p>
 

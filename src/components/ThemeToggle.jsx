@@ -13,9 +13,7 @@ const ThemeToggle = ({ className = "" }) => {
   };
 
   const handleClick = () => {
-    console.log('ThemeToggle clicked! Current theme:', theme);
     const nextTheme = getNextTheme(theme);
-    console.log('Changing to theme:', nextTheme);
     setTheme(nextTheme);
   };
 
@@ -54,7 +52,7 @@ const ThemeToggle = ({ className = "" }) => {
         // Focus
         "focus:outline-none focus:ring-2 focus:ring-blue-500",
         // Asegurar que sea clicable
-        "cursor-pointer touch-none",
+        "cursor-pointer touch-manipulation",
         className
       )}
     >
