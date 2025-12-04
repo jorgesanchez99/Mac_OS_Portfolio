@@ -328,14 +328,36 @@ body {
 
 
     #resume {
-        @apply w-fit h-fit absolute top-16 left-7/12 bg-white shadow-2xl drop-shadow-2xl rounded-xl overflow-hidden;
+        @apply absolute rounded-xl shadow-2xl drop-shadow-2xl
+        bg-transparent transform;
 
-        #window-header {
-            h2 {
-                @apply font-bold text-sm text-center flex-1;
-            }
-        }
+        /* Mobile / tablet: modal casi fullscreen
+           (tapa fondo y dock, respeta navbar) */
+        @apply left-1/2 -translate-x-1/2 top-20
+        w-[94vw] sm:w-[90vw]
+        h-[calc(100vh-5rem)];
+
+        /* Desktop: centrado, tamaño cómodo para leer el PDF */
+        @apply lg:w-[65vw] lg:h-[80vh]
+        lg:top-20 lg:left-1/2 lg:-translate-x-1/2;
     }
+
+    /* Hacer que la página del PDF sea responsive dentro de la ventana */
+    #resume .react-pdf__Document {
+        width: 100%;
+    }
+
+    #resume .react-pdf__Page {
+        width: 100% !important; /* el contenedor de la página ocupa todo el ancho */
+        display: flex;
+        justify-content: center; /* centra el canvas dentro */
+    }
+
+    #resume .react-pdf__Page canvas {
+        width: 100% !important; /* el canvas se adapta al ancho disponible */
+        height: auto !important; /* mantiene proporción, no deforma */
+    }
+
 
     #finder {
         /* Ventana */
