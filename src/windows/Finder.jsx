@@ -15,7 +15,9 @@ function Finder() {
             <h3>{name}</h3>
             <ul>
                 {items.map(item => (
-                    <li key={item.id} onClick={() => setActiveLocation(item)}
+                    <li
+                        key={item.id}
+                        onClick={() => setActiveLocation(item)}
                         className={clsx(
                             item.id === activeLocation?.id ? "active" : "not-active",
                         )}
@@ -29,7 +31,7 @@ function Finder() {
     );
 
     const openItem = (item) => {
-        if (item.fileType === "pdf") return openWindow('resume');
+        if (item.fileType === "pdf") return openWindow("resume");
         if (item.kind === "folder") return setActiveLocation(item);
         if (["fig", "url"].includes(item.fileType) && item.href)
             return window.open(item.href, "_blank");
@@ -39,14 +41,17 @@ function Finder() {
 
     return (
         <>
-
+            {/* Header estándar de ventana (usa estilos globales para #window-header) */}
             <div id="window-header">
                 <WindowControls target="finder"/>
                 <Search className="icon"/>
             </div>
 
-
-            <div className="bg-white flex h-full">
+            {/* Layout responsive:
+                - mobile/tablet: columna (sidebar arriba, contenido abajo)
+                - desktop: fila (sidebar izquierda, contenido derecha)
+            */}
+            <div className="flex flex-col lg:flex-row h-full bg-white dark:bg-slate-900">
                 <div className="sidebar">
                     {renderList(Object.values(locations), "Favoritos")}
                     {renderList(locations.work.children, "Proyectos")}
@@ -62,17 +67,12 @@ function Finder() {
                             <img src={item.icon} alt={item.name}/>
                             <p>{item.name}</p>
                         </li>
-                    ))
-
-                    }
+                    ))}
                 </ul>
             </div>
         </>
-    )
-
+    );
 }
 
 const FinderWindow = WindowWrapper(Finder, "finder");
-
-
-export default FinderWindow
+export default FinderWindow;

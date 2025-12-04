@@ -79,26 +79,37 @@ const Welcome = () => {
     },[])
 
 
-    return (
-        <section id="welcome">
-            <p ref={subtitleRef}>
-                {renderText("Hola, Soy Jorge! Bienvenido a mi",
-                "text-3xl font-georama",
-                100
-                )}
-            </p>
+return (
+  <section
+    id="welcome"
+    className="flex flex-col items-center justify-center px-4 pt-16 pb-10 text-center"
+  >
+    {/* Subtítulo */}
+    <p ref={subtitleRef} className="max-w-xl">
+      {renderText(
+        "Hola, Soy Jorge! Bienvenido a mi",
+        // tamaños según breakpoint
+        "text-xl sm:text-2xl md:text-3xl font-georama"
+      )}
+    </p>
 
-            <h1 ref={titleRef} className="mt-7">
-                {renderText("portafolio","text-9xl italic font-georama")}
-            </h1>
+    {/* Título principal */}
+    <h1 ref={titleRef} className="mt-7">
+      {renderText(
+        "portafolio",
+        // base más pequeño y va creciendo en tablet/desktop
+        "text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl italic font-georama leading-none"
+      )}
+    </h1>
+    {/*/!* Mensaje solo para pantallas pequeñas *!/*/}
+    {/*<div className="mt-6 block md:hidden">*/}
+    {/*  <p className="text-xs sm:text-sm opacity-80">*/}
+    {/*    Este portafolio está diseñado solo para pantallas desktop/tablets.*/}
+    {/*  </p>*/}
+    {/*</div>*/}
+  </section>
+);
 
-            <div className="small-screen">
-                <p>Este portafolio está diseñado solo para pantallas desktop/tablets </p>
-            </div>
-
-
-        </section>
-    );
 };
 
 export default Welcome;

@@ -2,348 +2,488 @@
 
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 html,
 body {
-  width: 100dvw;
-  overflow: hidden;
-  height: 100dvh;
-  background-image: url("/images/wallpaper.png");
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
+    width: 100dvw;
+    overflow: hidden;
+    height: 100dvh;
+    background-image: url("/images/wallpaper.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    transition: background-color 0.3s ease;
+}
+
+/* Soporte para dark mode */
+.dark body {
+    background-image: url("/images/wallpaper.png");
 }
 
 @theme {
-  --font-georama: "Georama", sans-serif;
-  --font-roboto: "Roboto Mono", monospace;
-  --breakpoint-3xl: 1920px;
+    --font-georama: "Georama", sans-serif;
+    --font-roboto: "Roboto Mono", monospace;
+    --breakpoint-3xl: 1920px;
+
+    /* Variables de tema personalizadas */
+    --color-bg-primary: #ffffff;
+    --color-bg-secondary: #f3f4f6;
+    --color-text-primary: #111827;
+    --color-text-secondary: #6b7280;
+    --color-border: #e5e7eb;
+}
+
+@theme dark {
+    --color-bg-primary: #1f2937;
+    --color-bg-secondary: #111827;
+    --color-text-primary: #f9fafb;
+    --color-text-secondary: #9ca3af;
+    --color-border: #374151;
 }
 
 @utility flex-center {
-  @apply flex items-center justify-center;
+    @apply flex items-center justify-center;
 }
 
 @utility col-center {
-  @apply flex flex-col items-center justify-center;
+    @apply flex flex-col items-center justify-center;
 }
 
 @utility abs-center {
-  @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2;
+    @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2;
 }
 
 @layer base {
-  main {
-    @apply w-dvw h-dvh overflow-hidden;
-  }
-
-  nav {
-    @apply flex justify-between items-center bg-white/50 backdrop-blur-3xl p-2 px-5 select-none;
-
-    div {
-      @apply flex items-center max-sm:w-full max-sm:justify-center gap-5;
-
-      &:last-child {
-        @apply max-sm:hidden;
-      }
+    main {
+        /* Mantiene el layout, añade colores de texto según tema */
+        @apply w-dvw h-dvh overflow-hidden
+        text-slate-900 dark:text-slate-100;
     }
 
-    ul {
-      @apply flex items-center gap-5 max-sm:hidden;
+    nav {
+        @apply flex justify-between items-center
+        bg-white/60 dark:bg-slate-900/70
+        backdrop-blur-3xl p-2 px-5
+        text-slate-900 dark:text-slate-100
+        transition-colors duration-200;
+        position: relative;
+        z-index: 100; /* navbar siempre por encima del welcome y ventanas */
 
-      p {
-        @apply text-sm cursor-pointer hover:underline transition-all;
-      }
-    }
+        div {
+            @apply flex items-center gap-2 md:gap-5;
 
-    time {
-      @apply text-sm font-medium text-black;
+            &:first-child {
+                @apply max-sm:w-auto max-sm:justify-start;
+            }
+        }
+
+        ul {
+            @apply flex items-center gap-5 max-sm:hidden;
+
+            p {
+                @apply text-sm cursor-pointer hover:underline transition-colors
+                text-slate-800 dark:text-slate-200;
+            }
+        }
+
+        time {
+            @apply text-sm font-medium select-none
+            text-slate-900 dark:text-slate-100;
+        }
+
+        /* Botones dentro del navbar (ThemeToggle, etc.) */
+
+        button {
+            @apply cursor-pointer;
+            -webkit-tap-highlight-color: transparent;
+        }
     }
-  }
 }
 
+
 @layer components {
-  .icon {
-    @apply p-1 hover:bg-gray-200 rounded hover:cursor-default;
-  }
-
-  #welcome {
-    @apply text-gray-200 flex flex-col justify-center items-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 select-none max-sm:h-screen max-sm:w-full max-sm:px-10;
-
-    .small-screen {
-      @apply sm:hidden m-7 bg-red-300/20 backdrop-blur-lg p-3 rounded-md absolute top-10;
-
-      p {
-        @apply flex-1 text-[16px] text-center font-roboto text-gray-400;
-      }
-    }
-  }
-
-  #dock {
-    @apply absolute bottom-5 left-1/2 -translate-x-1/2 z-50 select-none max-sm:hidden;
-
-    .dock-container {
-      @apply bg-white/20 backdrop-blur-md justify-between rounded-2xl p-1.5 flex items-end gap-1.5;
+    .icon {
+        @apply p-1 hover:bg-gray-200 rounded hover:cursor-default;
     }
 
-    .tooltip {
-      @apply !py-1 !px-3 !w-fit !text-center !text-xs !rounded-md !bg-blue-200 !text-blue-900 !shadow-2xl;
+    #welcome {
+        @apply text-gray-200 flex flex-col justify-center items-center
+        absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
+        select-none max-sm:px-10;
+        /* Mantén si te gusta este recorte vertical */
+        max-height: calc(100vh - 3rem);
+        /* Debajo del nav (z=100), pero por encima del fondo */
+        z-index: 1;
     }
 
-    .dock-icon {
-      @apply size-14 3xl:size-20 cursor-pointer;
+    #welcome .small-screen {
+        @apply sm:hidden m-7 bg-red-300/20 backdrop-blur-lg p-3 rounded-md absolute top-10;
 
-      img {
-        @apply object-cover object-center;
-      }
-    }
-  }
-
-  #window-controls {
-    @apply flex gap-2;
-
-    .close {
-      @apply size-3.5 rounded-full bg-[#ff6157] cursor-pointer;
-    }
-
-    .minimize {
-      @apply size-3.5 rounded-full bg-[#ffc030];
-    }
-
-    .maximize {
-      @apply size-3.5 rounded-full bg-[#2acb42];
-    }
-  }
-
-  #window-header {
-    @apply flex items-center justify-between px-4 py-3 rounded-t-lg bg-gray-50 border-b border-gray-200 select-none text-sm text-gray-400;
-  }
-
-  #safari {
-    @apply w-4xl absolute top-40 left-2/12 bg-white shadow-2xl drop-shadow-2xl rounded-xl overflow-hidden;
-
-    .search {
-      @apply flex items-center gap-3 w-2/3 bg-white border border-gray-300 rounded-lg px-3 py-2;
-
-      input {
-        @apply placeholder:text-gray-400;
-      }
-    }
-
-    .blog {
-      @apply bg-white p-10 max-w-3xl mx-auto;
-
-      h2 {
-        @apply text-xl font-bold text-pink-600 mb-10;
-      }
-
-      .blog-post {
-        @apply grid grid-cols-12 space-x-5;
-
-        img {
-          @apply size-full rounded-md object-cover;
+        p {
+            @apply flex-1 text-[16px] text-center font-roboto text-gray-400;
         }
+    }
+
+    #dock {
+        @apply absolute bottom-5 left-1/2 -translate-x-1/2 z-50 select-none;
+
+        .dock-container {
+            @apply flex items-end justify-between
+            rounded-2xl gap-1 p-1 sm:gap-1.5 sm:p-1.5
+            backdrop-blur-md
+            bg-white/20 dark:bg-slate-900/70
+            border border-white/40 dark:border-slate-700/70
+            shadow-[0_18px_35px_rgba(15,23,42,0.45)];
+        }
+
+        .tooltip {
+            @apply !py-1 !px-3 !w-fit !text-center !text-xs !rounded-md
+            !bg-blue-200 !text-blue-900 !shadow-2xl;
+            /* si quieres luego hacemos versión dark del tooltip también */
+        }
+
+        .dock-icon {
+            @apply size-12 sm:size-14 3xl:size-20 cursor-pointer;
+
+            img {
+                @apply object-cover object-center;
+            }
+        }
+    }
+
+
+    #window-controls {
+        @apply gap-2 items-center;
+        /* El flex lo ponemos en el JSX con className */
+
+        .close {
+            @apply size-3.5 rounded-full bg-[#ff6157] cursor-pointer;
+        }
+
+        .minimize {
+            @apply size-3.5 rounded-full bg-[#ffc030];
+        }
+
+        .maximize {
+            @apply size-3.5 rounded-full bg-[#2acb42];
+        }
+    }
+
+    #window-header {
+        @apply flex items-center justify-between
+        rounded-t-lg border-b
+        bg-gray-50/95 dark:bg-slate-800
+        border-gray-200 dark:border-slate-700
+        select-none
+        px-3 py-2.5 sm:px-4 sm:py-3
+        text-xs sm:text-sm
+        text-gray-500 dark:text-slate-300
+        transition-colors duration-200;
+
+        h2 {
+            @apply flex-1 text-center font-semibold
+            text-gray-600 dark:text-slate-100
+            text-xs sm:text-sm;
+        }
+    }
+
+
+    #safari {
+        @apply absolute rounded-xl shadow-2xl drop-shadow-2xl
+        bg-transparent transform;
+
+        /* Mobile / tablet: casi fullscreen, tapa dock pero no navbar */
+        @apply left-1/2 -translate-x-1/2 top-20
+        w-[94vw] sm:w-[92vw]
+        h-[calc(100vh-5rem)];
+
+        /* Desktop: navegador grande centrado */
+        @apply lg:w-[60vw] lg:h-[75vh]
+        lg:top-14 lg:left-1/2 lg:-translate-x-1/2;
+    }
+
+
+    /* === TERMINAL WINDOW === */
+    #terminal {
+        /* Mobile: panel casi a pantalla completa debajo del navbar */
+        @apply fixed inset-x-0 bottom-0 top-14 mx-auto w-full
+        bg-white/95 dark:bg-slate-950
+        border border-slate-200/60 dark:border-slate-800
+        shadow-2xl drop-shadow-2xl
+        rounded-t-2xl overflow-y-auto
+        transition-colors duration-200;
+
+        /* Desktop: ventana flotante como antes */
+        @apply md:absolute md:top-32 md:left-1/12
+        md:bottom-auto md:inset-x-auto md:mx-0
+        md:w-xl md:rounded-xl md:overflow-hidden;
+
+        h2 {
+            @apply font-bold text-xs sm:text-sm text-center w-full;
+        }
+
+        .techstack {
+            @apply font-roboto text-xs sm:text-sm p-4 sm:p-5 text-left
+            text-slate-800 dark:text-slate-100;
+
+            /* Línea del prompt */
+
+            > p:first-child {
+                @apply mb-3 font-mono;
+            }
+
+            .label {
+                @apply mt-2 ms-0 flex flex-col gap-0.5
+                text-[11px] text-gray-500 dark:text-slate-400;
+                @apply sm:mt-4 sm:ms-10 sm:flex-row sm:items-center;
+            }
+
+            .content {
+                @apply py-3 my-3 border-y border-dashed
+                border-slate-200 dark:border-slate-700
+                space-y-2 sm:py-5 sm:my-5;
+            }
+
+            .content li {
+                @apply flex flex-col items-start gap-1 sm:flex-row sm:items-center;
+
+                .check {
+                    @apply text-[#00A154] w-5 mt-0.5;
+                }
+
+                h3 {
+                    @apply font-semibold text-[#00A154]
+                    ms-0 mb-0.5 sm:mb-0 sm:w-32 sm:ms-5;
+                }
+
+                ul {
+                    @apply flex flex-wrap gap-x-2 gap-y-1 sm:gap-3;
+                }
+            }
+
+            .footnote {
+                @apply mt-3 text-[#00A154] space-y-1;
+
+                p {
+                    @apply flex items-center;
+
+                    svg {
+                        @apply w-5 me-3;
+                    }
+                }
+            }
+        }
+    }
+
+
+    #contact {
+        /* Mobile: pantalla/panel debajo del navbar */
+        @apply fixed inset-x-0 bottom-0 top-14 mx-auto w-full
+        bg-white/95 dark:bg-slate-900
+        border border-slate-200/60 dark:border-slate-800
+        shadow-2xl drop-shadow-2xl
+        rounded-t-2xl overflow-y-auto
+        transition-colors duration-200;
+
+        /* Desktop: ventana flotante centrada */
+        @apply md:absolute md:top-24 md:bottom-auto
+        md:inset-x-0 md:mx-auto
+        md:w-full md:max-w-3xl
+        md:rounded-xl;
+    }
+
+    #contact h2 {
+        @apply font-bold text-sm text-center w-full;
+    }
+
+
+    #resume {
+        @apply absolute rounded-xl shadow-2xl drop-shadow-2xl
+        bg-transparent transform;
+
+        /* Mobile / tablet: modal casi fullscreen
+           (tapa fondo y dock, respeta navbar) */
+        @apply left-1/2 -translate-x-1/2 top-20
+        w-[94vw] sm:w-[90vw]
+        h-[calc(100vh-5rem)];
+
+        /* Desktop: centrado, tamaño cómodo para leer el PDF */
+        @apply lg:w-[65vw] lg:h-[80vh]
+        lg:top-20 lg:left-1/2 lg:-translate-x-1/2;
+    }
+
+    /* Hacer que la página del PDF sea responsive dentro de la ventana */
+    #resume .react-pdf__Document {
+        width: 100%;
+    }
+
+    #resume .react-pdf__Page {
+        width: 100% !important; /* el contenedor de la página ocupa todo el ancho */
+        display: flex;
+        justify-content: center; /* centra el canvas dentro */
+    }
+
+    #resume .react-pdf__Page canvas {
+        width: 100% !important; /* el canvas se adapta al ancho disponible */
+        height: auto !important; /* mantiene proporción, no deforma */
+    }
+
+
+    #finder {
+        /* Ventana */
+        @apply absolute shadow-2xl drop-shadow-2xl overflow-hidden rounded-xl
+        bg-white dark:bg-slate-900 transform;
+
+        /* Mobile / tablet: centrado y usando casi toda la altura de la pantalla
+           100vh - top(5rem aprox) => tapa dock y fondo, pero respeta el navbar */
+        @apply left-1/2 -translate-x-1/2 top-20
+        w-[94vw] sm:w-[90vw]
+        h-[calc(100vh-5rem)];
+
+        /* Desktop: posición/tamaño original */
+        @apply lg:left-40 lg:translate-x-0 lg:w-3xl lg:h-[70vh] lg:top-20;
+
+        /* ===========================
+         * Sidebar
+         * =========================== */
+
+        .sidebar {
+            @apply w-full bg-gray-50 dark:bg-slate-900/90
+            border-b border-gray-200 dark:border-slate-700
+            flex flex-col p-4 space-y-3
+            lg:w-48 lg:border-b-0 lg:border-r lg:p-5;
+        }
+
+        .sidebar h3 {
+            @apply text-xs font-medium text-gray-400 dark:text-slate-400 mb-1;
+        }
+
+        .sidebar ul {
+            /* Mobile / tablet: chips en 2–3 columnas */
+            @apply grid grid-cols-2 gap-2 sm:grid-cols-3
+                /* Desktop: lista vertical */
+            lg:block lg:space-y-1 lg:gap-0;
+        }
+
+        .sidebar ul .active {
+            @apply bg-blue-100 text-blue-700
+            dark:bg-blue-900/40 dark:text-blue-200;
+        }
+
+        .sidebar ul .not-active {
+            @apply text-gray-700 dark:text-slate-300
+            hover:bg-gray-200 dark:hover:bg-slate-800/70;
+        }
+
+        .sidebar ul li {
+            @apply flex items-center gap-2 px-3 py-2 rounded-md
+            cursor-pointer transition-colors min-w-0;
+        }
+
+        /* ===========================
+         * Content area
+         * =========================== */
 
         .content {
-          @apply col-span-10 space-y-3;
-
-          p {
-            @apply text-xs text-gray-500;
-          }
-
-          h3 {
-            @apply font-semibold text-base text-gray-800;
-          }
-
-          a {
-            @apply text-blue-600 text-xs hover:underline flex items-center gap-3;
-          }
-        }
-      }
-    }
-  }
-
-  #terminal {
-    @apply w-xl absolute top-32 left-1/12 bg-white shadow-2xl drop-shadow-2xl rounded-xl overflow-hidden;
-
-    h2 {
-      @apply font-bold text-sm text-center w-full;
-    }
-
-    .techstack {
-      @apply text-sm font-roboto p-5;
-
-      .label {
-        @apply flex items-center ms-10 mt-7;
-      }
-
-      .content {
-        @apply py-5 my-5 border-y border-dashed space-y-1;
-
-        li {
-          .check {
-            @apply text-[#00A154] w-5;
-          }
-
-          h3 {
-            @apply font-semibold text-[#00A154] w-32 ms-5;
-          }
-
-          ul {
-            @apply flex items-center gap-3;
-          }
-        }
-      }
-
-      .footnote {
-        @apply text-[#00A154] space-y-1;
-
-        p {
-          @apply flex items-center;
-
-          svg {
-            @apply w-5 me-5;
-          }
-        }
-      }
-    }
-  }
-
-  #contact {
-    @apply max-w-2xl absolute top-60 left-5/12 bg-white shadow-2xl drop-shadow-2xl rounded-xl overflow-hidden;
-
-    h2 {
-      @apply font-bold text-sm text-center w-full;
-    }
-
-    h3 {
-      @apply text-xl font-semibold;
-    }
-
-    ul {
-      @apply flex items-center gap-3;
-
-      li {
-        @apply rounded-lg p-3 w-60 hover:-translate-y-0.5 hover:scale-105 origin-center transition-all duration-300;
-
-        a {
-          @apply space-y-5;
+            /* Mobile / tablet: grid + SCROLL interno */
+            @apply flex-1 p-4 sm:p-6
+            bg-white dark:bg-slate-900
+            relative overflow-y-auto
+            grid grid-cols-2 sm:grid-cols-3 gap-4
+            lg:max-w-2xl lg:block;
         }
 
-        p {
-          @apply font-semibold text-sm text-white;
+        .content li {
+            @apply flex flex-col items-center gap-3 lg:absolute;
+
+            img {
+                @apply object-contain object-center size-16 group-hover:scale-105;
+            }
+
+            p {
+                @apply text-sm text-center font-medium w-40
+                text-gray-800 dark:text-slate-100;
+            }
         }
-      }
     }
-  }
 
-  #gallery {
-    @apply w-4xl max-w-[90vw] h-[85vh] max-h-[800px] absolute top-1/2 left-1/2
-           -translate-x-1/2 -translate-y-1/2 bg-white shadow-2xl drop-shadow-2xl
-           rounded-xl overflow-hidden;
 
-    /* Mobile: Fullscreen con header mobile */
-    @media (max-width: 640px) {
-      @apply w-screen h-screen max-w-none max-h-none
-             top-0 left-0 translate-x-0 translate-y-0 rounded-none
-             fixed z-50;
-    }
-  }
+    #home {
+        @apply relative z-0 max-sm:hidden;
 
-  #resume {
-    @apply w-fit h-fit absolute top-16 left-7/12 bg-white shadow-2xl drop-shadow-2xl rounded-xl overflow-hidden;
+        ul {
+            li {
+                @apply absolute z-0 select-none flex items-center flex-col;
 
-    #window-header {
-      h2 {
-        @apply font-bold text-sm text-center flex-1;
-      }
-    }
-  }
+                img {
+                    @apply group-hover:bg-gray-950/10 p-1 rounded-md;
+                }
 
-  #finder {
-    @apply absolute w-3xl left-40 top-20 shadow-2xl drop-shadow-2xl overflow-hidden rounded-xl;
-
-    .sidebar {
-      @apply w-48 bg-gray-50 border-r border-gray-200 flex flex-col p-5 space-y-3;
-
-      h3 {
-        @apply text-xs font-medium text-gray-400 mb-1;
-      }
-
-      ul {
-        @apply space-y-1;
-
-        .active {
-          @apply bg-blue-100 text-blue-700;
+                p {
+                    @apply text-sm text-white text-center px-1 rounded-md group-hover:bg-blue-500 transition-colors max-w-40;
+                }
+            }
         }
-
-        .not-active {
-          @apply text-gray-700 hover:bg-gray-200;
-        }
-
-        li {
-          @apply flex items-center gap-2 px-3 py-2 rounded-md cursor-pointer transition-colors;
-        }
-      }
     }
 
-    .content {
-      @apply flex-1 p-8 bg-white max-w-2xl relative;
+    /* === GALLERY WINDOW === */
+    #gallery {
+        /* Mobile: panel casi a pantalla completa */
+        @apply fixed inset-x-2 bottom-2 top-16 mx-auto
+        bg-white dark:bg-slate-950
+        border border-slate-200/60 dark:border-slate-800
+        shadow-2xl drop-shadow-2xl
+        rounded-2xl
+        transition-colors duration-200;
 
-      li {
-        @apply absolute flex items-center flex-col gap-3;
+        /* Estructura flex para header + contenido scrollable */
+        @apply flex flex-col;
 
-        img {
-          @apply object-contain object-center size-16 relative group-hover:scale-105;
+        /* Desktop: ventana flotante */
+        @apply md:absolute md:top-24 md:left-20 md:right-20
+        md:bottom-auto md:inset-x-auto md:mx-0
+        md:w-auto md:max-w-6xl md:h-[550px]
+        md:rounded-xl;
+
+        /* Asegurar que el contenido interno pueda hacer scroll */
+
+        > div:not(#window-header) {
+            @apply flex-1 min-h-0;
         }
-
-        p {
-          @apply text-sm text-center font-medium w-40;
-        }
-      }
-    }
-  }
-
-  #txtfile {
-    @apply w-md absolute top-36 right-32 bg-white shadow-2xl drop-shadow-2xl rounded-xl overflow-hidden;
-
-    h2 {
-      @apply font-bold text-sm text-center w-full;
-    }
-  }
-
-  #imgfile {
-    @apply w-xl absolute top-40 left-2/12 bg-white shadow-2xl drop-shadow-2xl rounded-xl overflow-hidden;
-
-    #window-header {
-      p {
-        @apply font-bold text-[#5f6266];
-      }
     }
 
-    .preview {
-      @apply p-2 bg-gray-200 max-h-[70vh];
+    #imgfile {
+        @apply absolute rounded-xl shadow-2xl drop-shadow-2xl
+        bg-transparent transform;
 
-      img {
-        @apply w-full h-fit object-contain object-center;
-      }
+        /* Mobile / tablet:
+           centrado horizontal, altura casi toda la pantalla,
+           tapa fondo+dock pero respeta navbar superior */
+        @apply left-1/2 -translate-x-1/2 top-20
+        w-[94vw] sm:w-[90vw]
+        h-[calc(100vh-5rem)];
+
+        /* Desktop:
+           un poco más pequeño, tipo modal flotante encima del Finder */
+        @apply lg:w-[70vw] lg:h-[80vh] lg:top-20 lg:left-1/2 lg:-translate-x-1/2;
     }
-  }
 
-  #home {
-    @apply relative z-0 max-sm:hidden;
 
-    ul {
-      li {
-        @apply absolute z-0 select-none flex items-center flex-col;
+    #txtfile {
+        @apply absolute rounded-xl shadow-2xl drop-shadow-2xl
+        bg-transparent transform;
 
-        img {
-          @apply group-hover:bg-gray-950/10 p-1 rounded-md;
-        }
+        /* Mobile / tablet: modal casi fullscreen
+           (tapa fondo y dock, respeta navbar superior) */
+        @apply left-1/2 -translate-x-1/2 top-20
+        w-[94vw] sm:w-[90vw]
+        h-[calc(100vh-5rem)];
 
-        p {
-          @apply text-sm text-white text-center px-1 rounded-md group-hover:bg-blue-500 transition-colors max-w-40;
-        }
-      }
+        /* Desktop: centrado, ancho cómodo para leer texto */
+        @apply lg:w-[60vw] lg:h-[75vh]
+        lg:top-20 lg:left-1/2 lg:-translate-x-1/2;
     }
-  }
+
+
 }
