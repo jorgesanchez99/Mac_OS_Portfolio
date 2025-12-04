@@ -2,9 +2,11 @@ import WindowWrapper from "#hoc/WindowWrapper.jsx";
 import {WindowControls} from "#components";
 import {gallery, photosLinks} from "#constants/index.js";
 import {useState} from "react";
+import useWindowStore from "#store/window.js";
 
 const Gallery = () => {
     const [selectedCategory, setSelectedCategory] = useState(photosLinks[0].id);
+    const {openWindow} = useWindowStore();
 
     return (
         // Layout principal: columna + altura completa de la ventana
@@ -125,6 +127,7 @@ const Gallery = () => {
                             {gallery.map(item => (
                                 <div
                                     key={item.id}
+                                    onClick={() => openWindow(`${item.fileType}${item.kind}`, item)}
                                     className="group relative aspect-square overflow-hidden rounded-xl
                                                bg-slate-100 dark:bg-slate-800
                                                shadow-sm hover:shadow-md
@@ -133,7 +136,7 @@ const Gallery = () => {
                                                transition-all duration-300 cursor-pointer"
                                 >
                                     <img
-                                        src={item.img}
+                                        src={item.imageUrl}
                                         alt={`Portfolio item ${item.id}`}
                                         className="w-full h-full object-cover
                                                    group-hover:scale-105
