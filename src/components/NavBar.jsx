@@ -37,7 +37,7 @@ const NavBar = () => {
                         <li
                             key={id}
                             onClick={() => openWindow(type)}
-                            className="cursor-pointer text-[11px] md:text-xs hover:opacity-80"
+                            className="cursor-pointer text-[11px] md:text-xs hover:opacity-80 hover:underline transition-all"
                         >
                             {name}
                         </li>

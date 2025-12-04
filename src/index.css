@@ -424,4 +424,29 @@ body {
             }
         }
     }
+
+    /* === GALLERY WINDOW === */
+    #gallery {
+        /* Mobile: panel casi a pantalla completa */
+        @apply fixed inset-x-2 bottom-2 top-16 mx-auto
+        bg-white dark:bg-slate-950
+        border border-slate-200/60 dark:border-slate-800
+        shadow-2xl drop-shadow-2xl
+        rounded-2xl
+        transition-colors duration-200;
+
+        /* Estructura flex para header + contenido scrollable */
+        @apply flex flex-col;
+
+        /* Desktop: ventana flotante */
+        @apply md:absolute md:top-24 md:left-20 md:right-20
+        md:bottom-auto md:inset-x-auto md:mx-0
+        md:w-auto md:max-w-6xl md:h-[600px]
+        md:rounded-xl;
+
+        /* Asegurar que el contenido interno pueda hacer scroll */
+        > div:not(#window-header) {
+            @apply flex-1 min-h-0;
+        }
+    }
 }

@@ -202,6 +202,38 @@ const gallery = [
     id: 4,
     img: "/images/gal4.png",
   },
+  //   {
+  //   id: 5,
+  //   img: "/images/gal1.png",
+  // },
+  // {
+  //   id: 6,
+  //   img: "/images/gal2.png",
+  // },
+  // {
+  //   id: 7,
+  //   img: "/images/gal3.png",
+  // },
+  // {
+  //   id: 8,
+  //   img: "/images/gal4.png",
+  // },
+  //       {
+  //   id: 9,
+  //   img: "/images/gal1.png",
+  // },
+  // {
+  //   id: 10,
+  //   img: "/images/gal2.png",
+  // },
+  // {
+  //   id: 11,
+  //   img: "/images/gal3.png",
+  // },
+  // {
+  //   id: 12,
+  //   img: "/images/gal4.png",
+  // },
 ];
 
 export {
