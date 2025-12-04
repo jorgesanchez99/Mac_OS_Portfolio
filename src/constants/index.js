@@ -99,7 +99,7 @@ const javaShowcase = [
     {
         id: 4,
         title: "Generics",
-        image: "/images/showcase/java-generics.png",
+        image: "/images/javashowcase/java-generics.png",
         description: "Tipos genéricos y estructuras flexibles. Próximo mini proyecto.",
         link: "",
     },
@@ -279,7 +279,7 @@ const WORK_LOCATION = {
                     position: "top-5 left-10",
                     description: [
                         "Aquí irá la descripción de un futuro proyecto.",
-                        "Cuando se construya un proyecto real, se reemplazara este texto.",
+                        "Cuando se construya un proyecto real, se reemplazará este texto.",
                     ],
                 },
                 {
