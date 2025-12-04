@@ -64,16 +64,17 @@ body {
     nav {
         @apply flex justify-between items-center
         bg-white/60 dark:bg-slate-900/70
-        backdrop-blur-3xl p-2 px-5 select-none
+        backdrop-blur-3xl p-2 px-5
         text-slate-900 dark:text-slate-100
         transition-colors duration-200;
+        position: relative;
+        z-index: 100; /* navbar siempre por encima del welcome y ventanas */
 
         div {
-            @apply flex items-center gap-5
-            max-sm:w-full max-sm:justify-center;
+            @apply flex items-center gap-2 md:gap-5;
 
-            &:last-child {
-                @apply max-sm:hidden;
+            &:first-child {
+                @apply max-sm:w-auto max-sm:justify-start;
             }
         }
 
@@ -87,11 +88,19 @@ body {
         }
 
         time {
-            @apply text-sm font-medium
+            @apply text-sm font-medium select-none
             text-slate-900 dark:text-slate-100;
+        }
+
+        /* Botones dentro del navbar (ThemeToggle, etc.) */
+
+        button {
+            @apply cursor-pointer;
+            -webkit-tap-highlight-color: transparent;
         }
     }
 }
+
 
 @layer components {
     .icon {
@@ -99,14 +108,20 @@ body {
     }
 
     #welcome {
-        @apply text-gray-200 flex flex-col justify-center items-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 select-none max-sm:h-screen max-sm:w-full max-sm:px-10;
+        @apply text-gray-200 flex flex-col justify-center items-center
+        absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
+        select-none max-sm:px-10;
+        /* Mantén si te gusta este recorte vertical */
+        max-height: calc(100vh - 3rem);
+        /* Debajo del nav (z=100), pero por encima del fondo */
+        z-index: 1;
+    }
 
-        .small-screen {
-            @apply sm:hidden m-7 bg-red-300/20 backdrop-blur-lg p-3 rounded-md absolute top-10;
+    #welcome .small-screen {
+        @apply sm:hidden m-7 bg-red-300/20 backdrop-blur-lg p-3 rounded-md absolute top-10;
 
-            p {
-                @apply flex-1 text-[16px] text-center font-roboto text-gray-400;
-            }
+        p {
+            @apply flex-1 text-[16px] text-center font-roboto text-gray-400;
         }
     }
 
@@ -292,29 +307,25 @@ body {
 
 
     #contact {
-        @apply max-w-2xl absolute top-60 left-5/12
+        /* Mobile: pantalla/panel debajo del navbar */
+        @apply fixed inset-x-0 bottom-0 top-14 mx-auto w-full
         bg-white/95 dark:bg-slate-900
         border border-slate-200/60 dark:border-slate-800
-        shadow-2xl drop-shadow-2xl rounded-xl overflow-hidden
+        shadow-2xl drop-shadow-2xl
+        rounded-t-2xl overflow-y-auto
         transition-colors duration-200;
 
-        h2 {
-            @apply font-bold text-sm text-center w-full;
-        }
+        /* Desktop: ventana flotante centrada */
+        @apply md:absolute md:top-24 md:bottom-auto
+        md:inset-x-0 md:mx-auto
+        md:w-full md:max-w-3xl
+        md:rounded-xl;
     }
 
-    #gallery {
-        @apply w-4xl max-w-[90vw] h-[85vh] max-h-[800px] absolute top-1/2 left-1/2
-        -translate-x-1/2 -translate-y-1/2 bg-white shadow-2xl drop-shadow-2xl
-        rounded-xl overflow-hidden;
-
-        /* Mobile: Fullscreen con header mobile */
-        @media (max-width: 640px) {
-            @apply w-screen h-screen max-w-none max-h-none
-            top-0 left-0 translate-x-0 translate-y-0 rounded-none
-            fixed z-50;
-        }
+    #contact h2 {
+        @apply font-bold text-sm text-center w-full;
     }
+
 
     #resume {
         @apply w-fit h-fit absolute top-16 left-7/12 bg-white shadow-2xl drop-shadow-2xl rounded-xl overflow-hidden;

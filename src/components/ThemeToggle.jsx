@@ -1,6 +1,7 @@
 import { useTheme } from "../context/ThemeContext";
 import { Sun, Moon, Monitor } from "lucide-react";
 import clsx from "clsx";
+import PropTypes from "prop-types";
 
 const ThemeToggle = ({ className = "" }) => {
   const { theme, setTheme } = useTheme();
@@ -12,7 +13,10 @@ const ThemeToggle = ({ className = "" }) => {
   };
 
   const handleClick = () => {
-    setTheme(getNextTheme(theme));
+    console.log('ThemeToggle clicked! Current theme:', theme);
+    const nextTheme = getNextTheme(theme);
+    console.log('Changing to theme:', nextTheme);
+    setTheme(nextTheme);
   };
 
   const getIconAndLabel = () => {
@@ -33,21 +37,34 @@ const ThemeToggle = ({ className = "" }) => {
       type="button"
       onClick={handleClick}
       aria-label={label}
+      title={label}
       className={clsx(
-        "flex h-7 w-7 items-center justify-center rounded-full",
-        "bg-white/30 text-gray-800 shadow-sm ring-1 ring-black/5",
-        "backdrop-blur-md transition-colors",
-        "hover:bg-white/60 dark:hover:bg-gray-800/80",
-        "dark:bg-gray-900/50 dark:text-gray-100 dark:ring-white/10",
-        "focus-visible:outline-none focus-visible:ring-2",
-        "focus-visible:ring-sky-500 focus-visible:ring-offset-1 focus-visible:ring-offset-transparent",
+        // Tamaño más grande para móviles (área táctil mínima 44x44px)
+        "relative z-50",
+        "flex h-10 w-10 items-center justify-center rounded-full",
+        "md:h-8 md:w-8",
+        // Estilos base
+        "bg-white/50 text-gray-800 shadow-md ring-1 ring-black/10",
+        "backdrop-blur-md transition-all duration-200",
+        // Hover y active states
+        "hover:bg-white/70 hover:shadow-lg active:scale-90",
+        "dark:hover:bg-gray-700/70",
+        // Dark mode
+        "dark:bg-gray-800/50 dark:text-gray-100 dark:ring-white/10",
+        // Focus
+        "focus:outline-none focus:ring-2 focus:ring-blue-500",
+        // Asegurar que sea clicable
+        "cursor-pointer touch-none",
         className
       )}
     >
-      <span className="sr-only">{label}</span>
-      <Icon className="h-4 w-4" aria-hidden="true" />
+      <Icon className="h-5 w-5 md:h-4 md:w-4 pointer-events-none" aria-hidden="true" />
     </button>
   );
+};
+
+ThemeToggle.propTypes = {
+  className: PropTypes.string,
 };
 
 export default ThemeToggle;
