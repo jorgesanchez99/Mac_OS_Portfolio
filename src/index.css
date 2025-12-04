@@ -338,48 +338,83 @@ body {
     }
 
     #finder {
-        @apply absolute w-3xl left-40 top-20 shadow-2xl drop-shadow-2xl overflow-hidden rounded-xl;
+        /* Ventana */
+        @apply absolute shadow-2xl drop-shadow-2xl overflow-hidden rounded-xl
+        bg-white dark:bg-slate-900 transform;
+
+        /* Mobile / tablet: centrado y usando casi toda la altura de la pantalla
+           100vh - top(5rem aprox) => tapa dock y fondo, pero respeta el navbar */
+        @apply left-1/2 -translate-x-1/2 top-20
+        w-[94vw] sm:w-[90vw]
+        h-[calc(100vh-5rem)];
+
+        /* Desktop: posición/tamaño original */
+        @apply lg:left-40 lg:translate-x-0 lg:w-3xl lg:h-[70vh] lg:top-20;
+
+        /* ===========================
+         * Sidebar
+         * =========================== */
 
         .sidebar {
-            @apply w-48 bg-gray-50 border-r border-gray-200 flex flex-col p-5 space-y-3;
-
-            h3 {
-                @apply text-xs font-medium text-gray-400 mb-1;
-            }
-
-            ul {
-                @apply space-y-1;
-
-                .active {
-                    @apply bg-blue-100 text-blue-700;
-                }
-
-                .not-active {
-                    @apply text-gray-700 hover:bg-gray-200;
-                }
-
-                li {
-                    @apply flex items-center gap-2 px-3 py-2 rounded-md cursor-pointer transition-colors;
-                }
-            }
+            @apply w-full bg-gray-50 dark:bg-slate-900/90
+            border-b border-gray-200 dark:border-slate-700
+            flex flex-col p-4 space-y-3
+            lg:w-48 lg:border-b-0 lg:border-r lg:p-5;
         }
 
+        .sidebar h3 {
+            @apply text-xs font-medium text-gray-400 dark:text-slate-400 mb-1;
+        }
+
+        .sidebar ul {
+            /* Mobile / tablet: chips en 2–3 columnas */
+            @apply grid grid-cols-2 gap-2 sm:grid-cols-3
+                /* Desktop: lista vertical */
+            lg:block lg:space-y-1 lg:gap-0;
+        }
+
+        .sidebar ul .active {
+            @apply bg-blue-100 text-blue-700
+            dark:bg-blue-900/40 dark:text-blue-200;
+        }
+
+        .sidebar ul .not-active {
+            @apply text-gray-700 dark:text-slate-300
+            hover:bg-gray-200 dark:hover:bg-slate-800/70;
+        }
+
+        .sidebar ul li {
+            @apply flex items-center gap-2 px-3 py-2 rounded-md
+            cursor-pointer transition-colors min-w-0;
+        }
+
+        /* ===========================
+         * Content area
+         * =========================== */
+
         .content {
-            @apply flex-1 p-8 bg-white max-w-2xl relative;
+            /* Mobile / tablet: grid + SCROLL interno */
+            @apply flex-1 p-4 sm:p-6
+            bg-white dark:bg-slate-900
+            relative overflow-y-auto
+            grid grid-cols-2 sm:grid-cols-3 gap-4
+            lg:max-w-2xl lg:block;
+        }
 
-            li {
-                @apply absolute flex items-center flex-col gap-3;
+        .content li {
+            @apply flex flex-col items-center gap-3 lg:absolute;
 
-                img {
-                    @apply object-contain object-center size-16 relative group-hover:scale-105;
-                }
+            img {
+                @apply object-contain object-center size-16 group-hover:scale-105;
+            }
 
-                p {
-                    @apply text-sm text-center font-medium w-40;
-                }
+            p {
+                @apply text-sm text-center font-medium w-40
+                text-gray-800 dark:text-slate-100;
             }
         }
     }
+
 
     #txtfile {
         @apply w-md absolute top-36 right-32 bg-white shadow-2xl drop-shadow-2xl rounded-xl overflow-hidden;
@@ -441,10 +476,11 @@ body {
         /* Desktop: ventana flotante */
         @apply md:absolute md:top-24 md:left-20 md:right-20
         md:bottom-auto md:inset-x-auto md:mx-0
-        md:w-auto md:max-w-6xl md:h-[600px]
+        md:w-auto md:max-w-6xl md:h-[550px]
         md:rounded-xl;
 
         /* Asegurar que el contenido interno pueda hacer scroll */
+
         > div:not(#window-header) {
             @apply flex-1 min-h-0;
         }
