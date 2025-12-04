@@ -10,7 +10,7 @@ const WindowWrapper = (Component, windowKey) => {
     const { isOpen, zIndex } = windows[windowKey];
     const ref = useRef(null);
 
-    // Animación de entrada
+    // Animación de entrada cuando se abre la ventana
     useGSAP(() => {
       const element = ref.current;
       if (!element || !isOpen) return;
@@ -24,32 +24,32 @@ const WindowWrapper = (Component, windowKey) => {
       );
     }, [isOpen]);
 
-    // Draggable solo en >= 768px y solo arrastrando desde el header
+    // Draggable SOLO en pantallas grandes con puntero "fino" (mouse/trackpad)
     useGSAP(() => {
       const element = ref.current;
       if (!element) return;
 
       const mm = gsap.matchMedia();
 
-      mm.add("(min-width: 768px)", () => {
-        const header = element.querySelector("#window-header");
-
+      // min-width: 768px  -> tablet/desktop
+      // pointer: fine     -> dispositivos con ratón / trackpad
+      mm.add("(min-width: 768px) and (pointer: fine)", () => {
         const [instance] = Draggable.create(element, {
-          //trigger: header || element, // si no hay header, usa toda la ventana
+          dragClickables: true,         // importantísimo para que los botones internos funcionen
           onPress: () => focusWindow(windowKey),
         });
 
-        // cleanup para ESTE media query
+        // cleanup cuando deja de aplicar este media query
         return () => {
           if (instance) instance.kill();
         };
       });
 
-      // cleanup general cuando se desmonta el componente
+      // cleanup general al desmontar el componente
       return () => mm.revert();
     }, [focusWindow]);
 
-    // Mostrar / ocultar según isOpen
+    // Mostrar/ocultar ventana según isOpen
     useLayoutEffect(() => {
       const element = ref.current;
       if (!element) return;
@@ -71,6 +71,7 @@ const WindowWrapper = (Component, windowKey) => {
   Wrapped.displayName = `WindowWrapper(${
     Component.displayName || Component.name || "Component"
   })`;
+
   return Wrapped;
 };
 

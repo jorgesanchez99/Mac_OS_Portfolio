@@ -12,7 +12,7 @@ const Gallery = () => {
         <>
             {/* Header desktop - Controles tradicionales macOS (oculto en mobile) */}
             <div id="window-header" className="hidden sm:flex">
-                <WindowControls target="gallery" />
+                <WindowControls target="gallery"/>
                 <h2 className="text-sm font-medium text-gray-700">Photos</h2>
             </div>
 
@@ -51,7 +51,8 @@ const Gallery = () => {
             <div className="flex h-full overflow-hidden bg-gray-50">
 
                 {/* Sidebar - Oculta en mobile, visible en tablet+ */}
-                <aside className="hidden sm:flex sm:w-48 md:w-56 flex-col bg-white border-r border-gray-200 p-4 space-y-6">
+                <aside
+                    className="hidden sm:flex sm:w-48 md:w-56 flex-col bg-white border-r border-gray-200 p-4 space-y-6">
 
                     {/* Sección de categorías */}
                     <div>
@@ -66,10 +67,10 @@ const Gallery = () => {
                                         onClick={() => setSelectedCategory(id)}
                                         className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg 
                                                  transition-all duration-200 group
-                                                 ${selectedCategory === id 
-                                                     ? 'bg-blue-100 text-blue-700 shadow-sm' 
-                                                     : 'text-gray-700 hover:bg-gray-100'
-                                                 }`}
+                                                 ${selectedCategory === id
+                                            ? 'bg-blue-100 text-blue-700 shadow-sm'
+                                            : 'text-gray-700 hover:bg-gray-100'
+                                        }`}
                                     >
                                         {/* Icono */}
                                         <img

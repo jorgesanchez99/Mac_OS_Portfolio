@@ -14,8 +14,8 @@ const WindowControls = ({ target }) => {
         onClick={handleClose}
         className="flex items-center gap-1 rounded-full px-2 py-1 text-xs text-gray-500 hover:bg-gray-200 sm:hidden"
       >
-        <ArrowLeft className="h-4 w-4 text-blue-700" />
-        <span className="text-blue-700">Regresar</span>
+        <ArrowLeft className="h-4 w-4 text-pink-700" />
+        <span className="text-pink-700">Regresar</span>
       </button>
 
       {/* Desktop: 3 puntitos estilo macOS */}
