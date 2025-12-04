@@ -44,7 +44,7 @@ const dockApps = [
     },
     {
         id: "safari",
-        name: "Articulos", // was "Safari"
+        name: "Mini Proyectos Java", // was "Safari"
         icon: "safari.png",
         canOpen: true,
     },
@@ -74,30 +74,60 @@ const dockApps = [
     },
 ];
 
-const blogPosts = [
+const javaShowcase = [
     {
         id: 1,
-        date: "Sep 2, 2025",
-        title:
-            "TypeScript Explained: What It Is, Why It Matters, and How to Master It",
-        image: "/images/blog1.png",
-        link: "https://jsmastery.com/blog/typescript-explained-what-it-is-why-it-matters-and-how-to-master-it",
+        title: "POO en Java",
+        image: "/images/java-poo.png",
+        description: "Clases, objetos, herencia y buenas prácticas.",
+        link: "",
     },
     {
         id: 2,
-        date: "Aug 28, 2025",
-        title: "The Ultimate Guide to Mastering Three.js for 3D Development",
-        image: "/images/blog2.png",
-        link: "https://jsmastery.com/blog/the-ultimate-guide-to-mastering-three-js-for-3d-development",
+        title: "Colecciones",
+        image: "/images/java-collections.png",
+        description: "Uso de List, Set y Map con ejercicios básicos.",
+        link: "",
     },
     {
         id: 3,
-        date: "Aug 15, 2025",
-        title: "The Ultimate Guide to Mastering GSAP Animations",
-        image: "/images/blog3.png",
-        link: "https://jsmastery.com/blog/the-ultimate-guide-to-mastering-gsap-animations",
+        title: "Mini proyectos",
+        image: "/images/java-mini-projects.png",
+        description: "BankAccount, Gestor de Notas y CRUD simples.",
+        link: "",
+    },
+    {
+        id: 4,
+        title: "Generics",
+        image: "/images/java-generics.png",
+        description: "Tipos genéricos y estructuras flexibles. Próximo mini proyecto.",
+        link: "",
+    },
+    {
+        id: 5,
+        title: "Streams (Próximamente)",
+        image: "/images/java-streams.png",
+        description: "Filtros, mapeos y ordenamientos. Mini proyecto en camino.",
+        link: "",
+    },
+    {
+        id: 6,
+        title: "Concurrencia",
+        image: "/images/java-threads.png",
+        description: "Threads y tareas paralelas. Más adelante.",
+        link: "",
+    },
+    {
+        id: 7,
+        title: "Spring Boot",
+        image: "/images/java-spring-next.png",
+        description: "Mi siguiente meta: APIs REST con Spring.",
+        link: "",
     },
 ];
+
+
+
 
 const techStack = [
     {
@@ -217,7 +247,7 @@ export {
     navLinks,
     navIcons,
     dockApps,
-    blogPosts,
+    javaShowcase,
     techStack,
     socials,
     photosLinks,
