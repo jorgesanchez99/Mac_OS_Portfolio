@@ -76,11 +76,11 @@ const dockApps = [
 
 const javaShowcase = [
     {
-        id: 1,
-        title: "POO en Java",
-        image: "/images/javashowcase/java-poo.png",
-        description: "Clases, objetos, herencia y buenas prácticas.",
-        link: "",
+        id: 2,
+        title: "Inventory Manager (CRUD + JSON)",
+        image: "/images/javashowcase/java-inventory.png",
+        description: "Gestión de inventario con MVC, validaciones y persistencia JSON.",
+        link: "https://github.com/jorgesanchez99/inventory-manager",
     },
     {
         id: 2,
