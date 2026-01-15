@@ -76,7 +76,7 @@ const dockApps = [
 
 const javaShowcase = [
     {
-        id: 2,
+        id: 1,
         title: "Inventory Manager (CRUD + JSON)",
         image: "/images/javashowcase/java-inventory.png",
         description: "Gestión de inventario con MVC, validaciones y persistencia JSON.",
