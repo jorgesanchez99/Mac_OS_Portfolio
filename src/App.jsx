@@ -23,6 +23,18 @@ const WINDOW_COMPONENTS = {
 
 const WINDOW_KEYS = Object.keys(WINDOW_CONFIG);
 
+// Indicador mientras se descarga el chunk de una ventana por primera vez
+// (sobre todo el CV, que arrastra react-pdf). Transitorio y no bloqueante.
+const WindowFallback = () => (
+    <div
+        role="status"
+        aria-label="Cargando ventana"
+        className="pointer-events-none fixed inset-0 z-[9999] flex items-center justify-center"
+    >
+        <div className="h-10 w-10 animate-spin rounded-full border-4 border-gray-300 border-t-blue-500" />
+    </div>
+);
+
 // Monta la ventana recién cuando se abre por primera vez; luego la mantiene
 // montada (WindowWrapper alterna display) para preservar la posición de drag
 // y que las reaperturas sean instantáneas.
@@ -33,7 +45,7 @@ const DeferredWindow = ({ windowKey }) => {
     if (!hasOpened || !LazyWindow) return null;
 
     return (
-        <Suspense fallback={null}>
+        <Suspense fallback={<WindowFallback />}>
             <LazyWindow />
         </Suspense>
     );

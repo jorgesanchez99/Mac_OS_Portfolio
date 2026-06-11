@@ -12,9 +12,10 @@ function Image() {
     const [loadedUrl, setLoadedUrl] = useState(data?.imageUrl);
 
     // Reset de loading/error al cambiar de imagen. Ajuste de estado durante el
-    // render (recomendado por React) en lugar de un efecto con setState.
-    if (data?.imageUrl !== loadedUrl) {
-        setLoadedUrl(data?.imageUrl);
+    // render (recomendado por React) en lugar de un efecto con setState. El
+    // guard de imageUrl evita disparar el reset al cerrar (cuando data es null).
+    if (data?.imageUrl && data.imageUrl !== loadedUrl) {
+        setLoadedUrl(data.imageUrl);
         setIsLoading(true);
         setHasError(false);
     }
