@@ -1,8 +1,9 @@
 import useWindowStore from "#store/window.js";
 import { ArrowLeft } from "lucide-react";
+import PropTypes from "prop-types";
 
 const WindowControls = ({ target }) => {
-  const { closeWindow } = useWindowStore();
+  const closeWindow = useWindowStore((s) => s.closeWindow);
 
   const handleClose = () => closeWindow(target);
 
@@ -31,6 +32,10 @@ const WindowControls = ({ target }) => {
       </div>
     </div>
   );
+};
+
+WindowControls.propTypes = {
+  target: PropTypes.string.isRequired,
 };
 
 export default WindowControls;

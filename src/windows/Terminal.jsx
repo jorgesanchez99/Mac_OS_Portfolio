@@ -32,7 +32,7 @@ const Terminal = () => {
               {/* Lista de tecnologías */}
               <ul className="mt-1 ml-6 list-disc space-y-0.5 text-xs sm:text-sm">
                 {items.map((item, i) => (
-                  <li key={i}>
+                  <li key={item}>
                       {item}
                       {i<items.length - 1 ? ',' : ''}
                   </li>

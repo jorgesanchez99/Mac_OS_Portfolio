@@ -7,23 +7,26 @@ import clsx from "clsx";
 import useWindowStore from "#store/window.js";
 
 function Finder() {
-    const {openWindow} = useWindowStore();
-    const {activeLocation, setActiveLocation} = useLocationStore();
+    const openWindow = useWindowStore((s) => s.openWindow);
+    const activeLocation = useLocationStore((s) => s.activeLocation);
+    const setActiveLocation = useLocationStore((s) => s.setActiveLocation);
 
     const renderList = (items, name) => (
         <div>
             <h3>{name}</h3>
             <ul>
                 {items.map(item => (
-                    <li
-                        key={item.id}
-                        onClick={() => setActiveLocation(item)}
-                        className={clsx(
-                            item.id === activeLocation?.id ? "active" : "not-active",
-                        )}
-                    >
-                        <img src={item.icon} className="w-4" alt={item.name}/>
-                        <p className="text-sm font-medium truncate">{item.name}</p>
+                    <li key={item.id}>
+                        <button
+                            type="button"
+                            onClick={() => setActiveLocation(item)}
+                            className={clsx(
+                                item.id === activeLocation?.id ? "active" : "not-active",
+                            )}
+                        >
+                            <img src={item.icon} className="w-4" alt={item.name}/>
+                            <p className="text-sm font-medium truncate">{item.name}</p>
+                        </button>
                     </li>
                 ))}
             </ul>
@@ -59,13 +62,15 @@ function Finder() {
 
                 <ul className="content">
                     {activeLocation?.children?.map((item) => (
-                        <li
-                            key={item.id}
-                            className={`${item.position} cursor-pointer`}
-                            onClick={() => openItem(item)}
-                        >
-                            <img src={item.icon} alt={item.name}/>
-                            <p>{item.name}</p>
+                        <li key={item.id} className={item.position}>
+                            <button
+                                type="button"
+                                className="flex flex-col items-center gap-3 cursor-pointer"
+                                onClick={() => openItem(item)}
+                            >
+                                <img src={item.icon} alt={item.name}/>
+                                <p>{item.name}</p>
+                            </button>
                         </li>
                     ))}
                 </ul>

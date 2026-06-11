@@ -12,8 +12,8 @@ const projects = locations.work?.children ?? []
 
 const Home = () => {
 
-    const {setActiveLocation} = useLocationStore()
-    const {openWindow} = useWindowStore()
+    const setActiveLocation = useLocationStore((s) => s.setActiveLocation)
+    const openWindow = useWindowStore((s) => s.openWindow)
     const homeRef = useRef(null)
 
 
@@ -56,10 +56,15 @@ const Home = () => {
                     <li
                         key={project.id}
                         className={clsx("group folder",project.windowPosition)}
-                        onClick={() => handleOpenProject(project)}
                     >
-                        <img src="/images/folder.png" alt={`${project.name} folder icon`} />
-                        <p>{project.name}</p>
+                        <button
+                            type="button"
+                            className="flex flex-col items-center cursor-pointer"
+                            onClick={() => handleOpenProject(project)}
+                        >
+                            <img src="/images/folder.png" alt={`${project.name} folder icon`} />
+                            <p>{project.name}</p>
+                        </button>
                     </li>
                 ))}
             </ul>

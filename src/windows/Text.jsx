@@ -3,8 +3,7 @@ import {WindowControls} from "#components";
 import useWindowStore from "#store/window.js";
 
 function Text() {
-    const {windows} = useWindowStore();
-    const {data} = windows.txtfile;
+    const data = useWindowStore((s) => s.windows.txtfile.data);
 
     if (!data) return null;
 

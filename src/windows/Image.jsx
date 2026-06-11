@@ -4,35 +4,39 @@ import useWindowStore from "#store/window.js";
 import WindowControls from "#components/WindowControls.jsx";
 
 function Image() {
-    const {windows, closeWindow} = useWindowStore();
-    const {data} = windows.imgfile;
+    const data = useWindowStore((s) => s.windows.imgfile.data);
+    const isOpen = useWindowStore((s) => s.windows.imgfile.isOpen);
+    const closeWindow = useWindowStore((s) => s.closeWindow);
     const [isLoading, setIsLoading] = useState(true);
     const [hasError, setHasError] = useState(false);
+    const [loadedUrl, setLoadedUrl] = useState(data?.imageUrl);
 
-    // Reset states when image changes
-    useEffect(() => {
-        if (!data?.imageUrl) return;
+    // Reset de loading/error al cambiar de imagen. Ajuste de estado durante el
+    // render (recomendado por React) en lugar de un efecto con setState. El
+    // guard de imageUrl evita disparar el reset al cerrar (cuando data es null).
+    if (data?.imageUrl && data.imageUrl !== loadedUrl) {
+        setLoadedUrl(data.imageUrl);
         setIsLoading(true);
         setHasError(false);
-    }, [data?.imageUrl]);
+    }
 
     // ESC para cerrar
     useEffect(() => {
         const handleKeyDown = (e) => {
-            if (!data || !windows.imgfile.isOpen) return;
+            if (!data || !isOpen) return;
             if (e.key === "Escape") {
                 closeWindow("imgfile");
             }
         };
 
-        if (windows.imgfile.isOpen) {
+        if (isOpen) {
             globalThis.addEventListener("keydown", handleKeyDown);
         }
 
         return () => {
             globalThis.removeEventListener("keydown", handleKeyDown);
         };
-    }, [windows.imgfile.isOpen, data, closeWindow]);
+    }, [isOpen, data, closeWindow]);
 
     if (!data) return null;
 
