@@ -6,7 +6,7 @@ import useWindowStore from "#store/window.js";
 
 const Gallery = () => {
     const [selectedCategory, setSelectedCategory] = useState(photosLinks[0].id);
-    const {openWindow} = useWindowStore();
+    const openWindow = useWindowStore((s) => s.openWindow);
 
     return (
         // Layout principal: columna + altura completa de la ventana

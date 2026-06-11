@@ -6,8 +6,9 @@ import { Draggable } from "gsap/Draggable";
 
 const WindowWrapper = (Component, windowKey) => {
   const Wrapped = (props) => {
-    const { focusWindow, windows } = useWindowStore();
-    const { isOpen, zIndex } = windows[windowKey];
+    const focusWindow = useWindowStore((s) => s.focusWindow);
+    const isOpen = useWindowStore((s) => s.windows[windowKey].isOpen);
+    const zIndex = useWindowStore((s) => s.windows[windowKey].zIndex);
     const ref = useRef(null);
 
     // Animación de entrada cuando se abre la ventana

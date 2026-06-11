@@ -2,7 +2,7 @@ import useWindowStore from "#store/window.js";
 import { ArrowLeft } from "lucide-react";
 
 const WindowControls = ({ target }) => {
-  const { closeWindow } = useWindowStore();
+  const closeWindow = useWindowStore((s) => s.closeWindow);
 
   const handleClose = () => closeWindow(target);
 

@@ -4,8 +4,9 @@ import useWindowStore from "#store/window.js";
 import WindowControls from "#components/WindowControls.jsx";
 
 function Image() {
-    const {windows, closeWindow} = useWindowStore();
-    const {data} = windows.imgfile;
+    const data = useWindowStore((s) => s.windows.imgfile.data);
+    const isOpen = useWindowStore((s) => s.windows.imgfile.isOpen);
+    const closeWindow = useWindowStore((s) => s.closeWindow);
     const [isLoading, setIsLoading] = useState(true);
     const [hasError, setHasError] = useState(false);
 
@@ -19,20 +20,20 @@ function Image() {
     // ESC para cerrar
     useEffect(() => {
         const handleKeyDown = (e) => {
-            if (!data || !windows.imgfile.isOpen) return;
+            if (!data || !isOpen) return;
             if (e.key === "Escape") {
                 closeWindow("imgfile");
             }
         };
 
-        if (windows.imgfile.isOpen) {
+        if (isOpen) {
             globalThis.addEventListener("keydown", handleKeyDown);
         }
 
         return () => {
             globalThis.removeEventListener("keydown", handleKeyDown);
         };
-    }, [windows.imgfile.isOpen, data, closeWindow]);
+    }, [isOpen, data, closeWindow]);
 
     if (!data) return null;
 

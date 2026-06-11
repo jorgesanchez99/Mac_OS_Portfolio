@@ -7,8 +7,9 @@ import clsx from "clsx";
 import useWindowStore from "#store/window.js";
 
 function Finder() {
-    const {openWindow} = useWindowStore();
-    const {activeLocation, setActiveLocation} = useLocationStore();
+    const openWindow = useWindowStore((s) => s.openWindow);
+    const activeLocation = useLocationStore((s) => s.activeLocation);
+    const setActiveLocation = useLocationStore((s) => s.setActiveLocation);
 
     const renderList = (items, name) => (
         <div>

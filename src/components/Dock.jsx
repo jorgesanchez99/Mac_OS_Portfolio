@@ -10,7 +10,9 @@ const PINNED_MOBILE_APPS = 5; // cuántos iconos se muestran en mobile
 
 const Dock = () => {
 
-    const {openWindow, closeWindow, windows} = useWindowStore();
+    const openWindow = useWindowStore((s) => s.openWindow);
+    const closeWindow = useWindowStore((s) => s.closeWindow);
+    const windows = useWindowStore((s) => s.windows);
     const dockRef = useRef(null);
 
     useGSAP(()=> {

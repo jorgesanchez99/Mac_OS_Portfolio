@@ -7,7 +7,7 @@ import ThemeToggle from "./ThemeToggle";
 
 const NavBar = () => {
     const [currentTime, setCurrentTime] = useState(dayjs());
-    const {openWindow} = useWindowStore();
+    const openWindow = useWindowStore((s) => s.openWindow);
 
     useEffect(() => {
         const interval = setInterval(() => {

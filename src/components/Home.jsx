@@ -12,8 +12,8 @@ const projects = locations.work?.children ?? []
 
 const Home = () => {
 
-    const {setActiveLocation} = useLocationStore()
-    const {openWindow} = useWindowStore()
+    const setActiveLocation = useLocationStore((s) => s.setActiveLocation)
+    const openWindow = useWindowStore((s) => s.openWindow)
     const homeRef = useRef(null)
 
 
