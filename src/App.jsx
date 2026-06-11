@@ -1,9 +1,47 @@
-import {Draggable} from "gsap/Draggable";
+import { lazy, Suspense } from "react";
+import PropTypes from "prop-types";
+import { Draggable } from "gsap/Draggable";
 import gsap from "gsap";
+
+import { Welcome, NavBar, Dock, Home } from "#components";
+import useWindowStore from "#store/window.js";
+import { WINDOW_CONFIG } from "#constants/index.js";
+
 gsap.registerPlugin(Draggable);
 
-import {Welcome, NavBar, Dock, Home} from "#components";
-import {Safari, Terminal, Resume, Finder, Text, Image, Contact, Gallery} from "#windows";
+// Cada ventana viaja en su propio chunk y se descarga al abrirse por primera vez.
+const WINDOW_COMPONENTS = {
+    terminal: lazy(() => import("#windows/Terminal.jsx")),
+    safari: lazy(() => import("#windows/Safari.jsx")),
+    resume: lazy(() => import("#windows/Resume.jsx")),
+    finder: lazy(() => import("#windows/Finder.jsx")),
+    txtfile: lazy(() => import("#windows/Text.jsx")),
+    imgfile: lazy(() => import("#windows/Image.jsx")),
+    contact: lazy(() => import("#windows/Contact.jsx")),
+    gallery: lazy(() => import("#windows/Gallery.jsx")),
+};
+
+const WINDOW_KEYS = Object.keys(WINDOW_CONFIG);
+
+// Monta la ventana recién cuando se abre por primera vez; luego la mantiene
+// montada (WindowWrapper alterna display) para preservar la posición de drag
+// y que las reaperturas sean instantáneas.
+const DeferredWindow = ({ windowKey }) => {
+    const hasOpened = useWindowStore((s) => s.windows[windowKey].hasOpened);
+
+    const LazyWindow = WINDOW_COMPONENTS[windowKey];
+    if (!hasOpened || !LazyWindow) return null;
+
+    return (
+        <Suspense fallback={null}>
+            <LazyWindow />
+        </Suspense>
+    );
+};
+
+DeferredWindow.propTypes = {
+    windowKey: PropTypes.string.isRequired,
+};
 
 const App = () => {
     return (
@@ -11,16 +49,12 @@ const App = () => {
             <NavBar />
             <Welcome />
             <Dock />
-            <Terminal />
-            <Safari />
-            <Resume />
-            <Finder />
-            <Text />
-            <Image />
-            <Contact />
             <Home />
-            <Gallery />
+            {WINDOW_KEYS.map((key) => (
+                <DeferredWindow key={key} windowKey={key} />
+            ))}
         </main>
-    )
-}
-export default App
+    );
+};
+
+export default App;
