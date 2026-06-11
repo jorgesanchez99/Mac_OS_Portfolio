@@ -1,58 +1,52 @@
-import { createContext, useContext, useEffect, useState, useMemo, useCallback } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
+import { ThemeContext } from './theme-context.js';
 
-const ThemeContext = createContext();
+const SYSTEM_QUERY = '(prefers-color-scheme: dark)';
+
+const getSystemTheme = () =>
+  globalThis.matchMedia(SYSTEM_QUERY).matches ? 'dark' : 'light';
 
 export const ThemeProvider = ({ children }) => {
-  // Inicializa el tema desde localStorage o usa 'system' por defecto
+  // Preferencia del usuario: 'light' | 'dark' | 'system'
   const [theme, setTheme] = useState(() => {
     const savedTheme = localStorage.getItem('theme');
     return savedTheme || 'system';
   });
 
-  // Función para obtener el tema efectivo (resuelve 'system' al tema real)
-  const getEffectiveTheme = useCallback(() => {
-    if (theme === 'system') {
-      return globalThis.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-    }
-    return theme;
-  }, [theme]);
+  // Tema del SO como estado reactivo (no se toca el DOM por fuera de React)
+  const [systemTheme, setSystemTheme] = useState(getSystemTheme);
 
+  // Suscripción a los cambios de tema del SO
   useEffect(() => {
-    const root = globalThis.document.documentElement;
-
-    // Remover clases de tema previas
-    root.classList.remove('light', 'dark');
-
-    // Aplicar el tema efectivo
-    const effectiveTheme = getEffectiveTheme();
-    root.classList.add(effectiveTheme);
-
-    // Guardar en localStorage
-    localStorage.setItem('theme', theme);
-
-    // Listener para cambios en el tema del sistema
-    const mediaQuery = globalThis.matchMedia('(prefers-color-scheme: dark)');
-    const handleChange = () => {
-      if (theme === 'system') {
-        root.classList.remove('light', 'dark');
-        const newTheme = mediaQuery.matches ? 'dark' : 'light';
-        root.classList.add(newTheme);
-      }
-    };
+    const mediaQuery = globalThis.matchMedia(SYSTEM_QUERY);
+    const handleChange = (e) => setSystemTheme(e.matches ? 'dark' : 'light');
 
     mediaQuery.addEventListener('change', handleChange);
-
     return () => mediaQuery.removeEventListener('change', handleChange);
-  }, [theme, getEffectiveTheme]);
+  }, []);
 
-  const value = useMemo(() => ({
-    theme,
-    setTheme,
-    effectiveTheme: getEffectiveTheme(),
-    isDark: getEffectiveTheme() === 'dark',
-    isLight: getEffectiveTheme() === 'light',
-  }), [theme, getEffectiveTheme]);
+  // Tema efectivo derivado: si la preferencia es 'system', usa el del SO
+  const effectiveTheme = theme === 'system' ? systemTheme : theme;
+
+  // Aplica la clase al DOM y persiste la preferencia
+  useEffect(() => {
+    const root = globalThis.document.documentElement;
+    root.classList.remove('light', 'dark');
+    root.classList.add(effectiveTheme);
+    localStorage.setItem('theme', theme);
+  }, [theme, effectiveTheme]);
+
+  const value = useMemo(
+    () => ({
+      theme,
+      setTheme,
+      effectiveTheme,
+      isDark: effectiveTheme === 'dark',
+      isLight: effectiveTheme === 'light',
+    }),
+    [theme, effectiveTheme]
+  );
 
   return (
     <ThemeContext.Provider value={value}>
@@ -64,12 +58,3 @@ export const ThemeProvider = ({ children }) => {
 ThemeProvider.propTypes = {
   children: PropTypes.node.isRequired,
 };
-
-export const useTheme = () => {
-  const context = useContext(ThemeContext);
-  if (!context) {
-    throw new Error('useTheme must be used within ThemeProvider');
-  }
-  return context;
-};
-

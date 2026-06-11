@@ -1,4 +1,4 @@
-import { useTheme } from "../context/ThemeContext";
+import { useTheme } from "../context/theme-context";
 import { Sun, Moon, Monitor } from "lucide-react";
 import clsx from "clsx";
 import PropTypes from "prop-types";
