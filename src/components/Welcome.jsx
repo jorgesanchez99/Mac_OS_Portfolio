@@ -101,12 +101,6 @@ return (
         "text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl italic font-georama leading-none"
       )}
     </h1>
-    {/*/!* Mensaje solo para pantallas pequeñas *!/*/}
-    {/*<div className="mt-6 block md:hidden">*/}
-    {/*  <p className="text-xs sm:text-sm opacity-80">*/}
-    {/*    Este portafolio está diseñado solo para pantallas desktop/tablets.*/}
-    {/*  </p>*/}
-    {/*</div>*/}
   </section>
 );
 
