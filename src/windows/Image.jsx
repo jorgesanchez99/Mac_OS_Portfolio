@@ -9,13 +9,15 @@ function Image() {
     const closeWindow = useWindowStore((s) => s.closeWindow);
     const [isLoading, setIsLoading] = useState(true);
     const [hasError, setHasError] = useState(false);
+    const [loadedUrl, setLoadedUrl] = useState(data?.imageUrl);
 
-    // Reset states when image changes
-    useEffect(() => {
-        if (!data?.imageUrl) return;
+    // Reset de loading/error al cambiar de imagen. Ajuste de estado durante el
+    // render (recomendado por React) en lugar de un efecto con setState.
+    if (data?.imageUrl !== loadedUrl) {
+        setLoadedUrl(data?.imageUrl);
         setIsLoading(true);
         setHasError(false);
-    }, [data?.imageUrl]);
+    }
 
     // ESC para cerrar
     useEffect(() => {
