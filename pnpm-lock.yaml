@@ -29,6 +29,9 @@ importers:
       lucide-react:
         specifier: ^0.555.0
         version: 0.555.0(react@19.2.7)
+      pdfjs-dist:
+        specifier: 5.4.296
+        version: 5.4.296
       prop-types:
         specifier: ^15.8.1
         version: 15.8.1

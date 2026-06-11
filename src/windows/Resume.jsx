@@ -5,12 +5,11 @@ import {Download} from "lucide-react";
 import {pdfjs, Document, Page} from "react-pdf";
 import "react-pdf/dist/Page/AnnotationLayer.css";
 import "react-pdf/dist/Page/TextLayer.css";
+import pdfWorkerSrc from "pdfjs-dist/build/pdf.worker.min.mjs?url";
 
-pdfjs.GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
-// pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-//   'pdfjs-dist/build/pdf.worker.min.mjs',
-//   import.meta.url,
-// ).toString();
+// Worker empaquetado por Vite: se sirve localmente y queda versionado con el
+// build, sin depender de unpkg en runtime.
+pdfjs.GlobalWorkerOptions.workerSrc = pdfWorkerSrc;
 
 const Resume = () => {
   const fileUrl = "files/CV_Jorge_Sanchez.pdf";
