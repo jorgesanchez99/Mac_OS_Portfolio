@@ -376,8 +376,8 @@ body {
             hover:bg-gray-200 dark:hover:bg-slate-800/70;
         }
 
-        .sidebar ul li {
-            @apply flex items-center gap-2 px-3 py-2 rounded-md
+        .sidebar ul button {
+            @apply w-full flex items-center gap-2 px-3 py-2 rounded-md
             cursor-pointer transition-colors min-w-0;
         }
 

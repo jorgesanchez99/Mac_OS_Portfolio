@@ -125,10 +125,12 @@ const Gallery = () => {
                                        pb-6"
                         >
                             {gallery.map(item => (
-                                <div
+                                <button
+                                    type="button"
                                     key={item.id}
+                                    aria-label={`Ver imagen ${item.id}`}
                                     onClick={() => openWindow(`${item.fileType}${item.kind}`, item)}
-                                    className="group relative aspect-square overflow-hidden rounded-xl
+                                    className="group relative aspect-square w-full overflow-hidden rounded-xl
                                                bg-slate-100 dark:bg-slate-800
                                                shadow-sm hover:shadow-md
                                                ring-1 ring-slate-200 dark:ring-slate-700
@@ -167,7 +169,7 @@ const Gallery = () => {
                                             View
                                         </span>
                                     </div>
-                                </div>
+                                </button>
                             ))}
                         </div>
                     </div>

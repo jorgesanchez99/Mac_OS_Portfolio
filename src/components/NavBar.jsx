@@ -34,12 +34,14 @@ const NavBar = () => {
                 {/* Links: ocultos en cel, visibles desde sm (>=640px) */}
                 <ul className="hidden items-center gap-4 sm:flex">
                     {navLinks.map(({id, name, type}) => (
-                        <li
-                            key={id}
-                            onClick={() => openWindow(type)}
-                            className="cursor-pointer text-[11px] md:text-xs hover:opacity-80 hover:underline transition-all"
-                        >
-                            {name}
+                        <li key={id}>
+                            <button
+                                type="button"
+                                onClick={() => openWindow(type)}
+                                className="cursor-pointer text-[11px] md:text-xs hover:opacity-80 hover:underline transition-all"
+                            >
+                                {name}
+                            </button>
                         </li>
                     ))}
                 </ul>
